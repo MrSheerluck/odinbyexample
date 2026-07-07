@@ -17,6 +17,8 @@ main :: proc() {
 	index_t := read_template("templates/index.html")
 	ex_tmpl := read_template("templates/example.html")
 	css     := read_template("templates/site.css")
+	js      := read_template("templates/site.js")
+	clipboard := read_template("templates/clipboard.svg")
 
 	os.make_directory("public")
 
@@ -64,6 +66,16 @@ main :: proc() {
 	// Copy CSS
 	if werr := os.write_entire_file("public/site.css", transmute([]byte)css); werr != nil {
 		fmt.eprintln("ERROR: could not write public/site.css")
+	}
+
+	// Copy JS
+	if werr := os.write_entire_file("public/site.js", transmute([]byte)js); werr != nil {
+		fmt.eprintln("ERROR: could not write public/site.js")
+	}
+
+	// Copy clipboard icon
+	if werr := os.write_entire_file("public/clipboard.svg", transmute([]byte)clipboard); werr != nil {
+		fmt.eprintln("ERROR: could not write public/clipboard.svg")
 	}
 
 	fmt.println("Done!")
