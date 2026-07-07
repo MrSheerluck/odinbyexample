@@ -242,12 +242,12 @@ highlight_line :: proc(line: string) -> string {
 		"min", "max", "abs", "clamp",
 	}
 
+	result = highlight_strings(result)
+	result = highlight_numbers(result)
 	result = replace_tokens(result, keywords[:], "k")
 	result = replace_tokens(result, types[:], "kt")
 	result = replace_tokens(result, constants[:], "kc")
 	result = replace_tokens(result, builtins[:], "nb")
-	result = highlight_strings(result)
-	result = highlight_numbers(result)
 
 	return result
 }
