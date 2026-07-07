@@ -1,0 +1,164 @@
+/* CSS reset */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a,
+pre, code, img, ul, ol, li, table, tr, td, th {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+body { line-height: 1; }
+ol, ul { list-style: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* Layout */
+body {
+  font-family: 'Georgia', serif;
+  font-size: 16px;
+  line-height: 22px;
+  background-color: #ffffff;
+  color: #252519;
+}
+
+h2 {
+  font-size: 32px;
+  line-height: 40px;
+  margin-top: 40px;
+}
+
+h2 a {
+  text-decoration: none;
+  color: #5a3d8a;
+}
+
+a, a:visited {
+  color: #5a3d8a;
+}
+
+p.footer {
+  color: #808080;
+  font-size: 75%;
+}
+p.footer a, p.footer a:visited {
+  color: #808080;
+}
+
+/* Index page */
+#intro {
+  width: 420px;
+  max-width: calc(100% - 24px);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 120px;
+}
+#intro p {
+  padding-top: 20px;
+}
+#intro ul {
+  padding-top: 20px;
+}
+#intro ul li {
+  padding: 3px 0;
+}
+
+/* Example page */
+div.example {
+  width: 995px;
+  max-width: calc(100% - 24px);
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 120px;
+}
+
+div.example table {
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+td.docs {
+  width: 420px;
+  max-width: 420px;
+  min-width: 420px;
+  vertical-align: top;
+  text-align: left;
+}
+td.docs p {
+  padding: 5px 5px 15px 0;
+}
+
+td.code {
+  width: 575px;
+  max-width: 575px;
+  min-width: 575px;
+  padding: 5px;
+  vertical-align: top;
+  background: #f0f0f0;
+}
+td.code.empty {
+  background: #ffffff;
+}
+td.code pre {
+  margin: 0;
+}
+
+p.next {
+  margin-bottom: 20px;
+}
+
+img.copy {
+  height: 16px;
+  width: 16px;
+  float: right;
+  cursor: pointer;
+}
+
+pre, code {
+  font-size: 14px;
+  line-height: 18px;
+  font-family: 'Menlo', 'Monaco', 'Consolas', 'Lucida Console', monospace;
+}
+
+/* Syntax highlighting */
+.c1 { color: #808080; }  /* Comment */
+.k  { color: #954121; }  /* Keyword: proc, if, for, return, defer, switch */
+.kc { color: #954121; }  /* Keyword.Constant: nil, true, false */
+.kd { color: #954121; }  /* Keyword.Declaration: package, import */
+.kt { color: #b00040; }  /* Keyword.Type: int, f32, string, bool */
+.nb { color: #954121; }  /* Name.Builtin: len, size_of, typeid_of */
+.m  { color: #666666; }  /* Number */
+.s  { color: #219161; }  /* String */
+.nd { color: #6c3fb5; }  /* Name.Directive: #partial, #soa, #unroll */
+.o  { color: #000000; }  /* Operator */
+.p  { color: #000000; }  /* Punctuation */
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #1f1f1f;
+    color: #dadada;
+  }
+  h2 a, a, a:visited {
+    color: #a98fd4;
+  }
+  td.code {
+    background: #282828;
+  }
+  td.code.empty {
+    background: #1f1f1f;
+  }
+  p.footer { color: #898e98; }
+  p.footer a, p.footer a:visited { color: #898e98; }
+
+  .c1 { color: #868686; }
+  .k  { color: #af5a54; }
+  .kc { color: #af5a54; }
+  .kd { color: #af5a54; }
+  .kt { color: #b64343; }
+  .nb { color: #af5a54; }
+  .m  { color: #688ec8; }
+  .s  { color: #718e72; }
+  .nd { color: #9b72d4; }
+  .o  { color: #dadada; }
+  .p  { color: #dadada; }
+}
