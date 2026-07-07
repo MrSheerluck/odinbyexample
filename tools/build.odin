@@ -19,6 +19,8 @@ main :: proc() {
 	css     := read_template("templates/site.css")
 	js      := read_template("templates/site.js")
 	clipboard := read_template("templates/clipboard.svg")
+	favicon := read_template("templates/favicon.svg")
+	notfound := read_template("templates/404.html")
 
 	os.make_directory("public")
 
@@ -76,6 +78,23 @@ main :: proc() {
 	// Copy clipboard icon
 	if werr := os.write_entire_file("public/clipboard.svg", transmute([]byte)clipboard); werr != nil {
 		fmt.eprintln("ERROR: could not write public/clipboard.svg")
+	}
+
+	// Copy favicon
+	if werr := os.write_entire_file("public/favicon.svg", transmute([]byte)favicon); werr != nil {
+		fmt.eprintln("ERROR: could not write public/favicon.svg")
+	}
+
+	// Copy logo
+	if werr := os.write_entire_file("public/logo.svg", transmute([]byte)read_template("templates/logo.svg")); werr != nil {
+		fmt.eprintln("ERROR: could not write public/logo.svg")
+	}
+
+	// 404 page
+	nf := notfound
+	nf, _ = strings.replace_all(nf, "{{Footer}}", footer)
+	if werr := os.write_entire_file("public/404.html", transmute([]byte)nf); werr != nil {
+		fmt.eprintln("ERROR: could not write public/404.html")
 	}
 
 	fmt.println("Done!")
