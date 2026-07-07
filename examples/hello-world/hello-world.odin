@@ -2,14 +2,20 @@
 // which is Odin's twist on "hello world". Here's the full
 // source code.
 //
-// To run the program, put the code in a file and use `odin run`:
+// To run the program, put the code in a file and use odin run:
 //
 //   $ odin run hello-world.odin -file
 //   Hellope!
 //
-// You can also build it into a binary:
+// Sometimes we'll want to build our programs into binaries.
+// We can do this using odin build:
 //
-//   $ odin build hello-world.odin -file
+//   $ odin build hello-world.odin -file -out:hello-world
+//   $ ls
+//   hello-world     hello-world.odin
+//
+// We can then execute the built binary directly:
+//
 //   $ ./hello-world
 //   Hellope!
 //

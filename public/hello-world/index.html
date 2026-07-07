@@ -9,12 +9,15 @@
   <div class="example" id="hello-world">
     <h2><a href="/">Odin by Example</a>: Hello world</h2>
     <table><tr><td class="docs"><p>Our first program will print the classic "hellope" message, which is Odin's twist on "hello world". Here's the full source code.</p>
-<p>To run the program, put the code in a file and use `odin run`:</p>
+<p>To run the program, put the code in a file and use odin run:</p>
 <pre><span class="gp">$ odin run hello-world.odin -file</span>
 <span class="go">Hellope!</span></pre>
-<p>You can also build it into a binary:</p>
-<pre><span class="gp">$ odin build hello-world.odin -file</span>
-<span class="gp">$ ./hello-world</span>
+<p>Sometimes we'll want to build our programs into binaries. We can do this using odin build:</p>
+<pre><span class="gp">$ odin build hello-world.odin -file -out:hello-world</span>
+<span class="gp">$ ls</span>
+<span class="go">hello-world     hello-world.odin</span></pre>
+<p>We can then execute the built binary directly:</p>
+<pre><span class="gp">$ ./hello-world</span>
 <span class="go">Hellope!</span></pre>
 <p>Now that we can run and build basic Odin programs, let's learn more about the language.</p></td><td class="code"><pre><span class="k">package</span> main
 
