@@ -18,7 +18,7 @@ window.onkeydown = function(e) {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-  var blocks = document.querySelectorAll('td.code pre');
+  var blocks = document.querySelectorAll('div.code pre');
   blocks.forEach(function(pre) {
     var btn = document.createElement('img');
     btn.src = '/clipboard.svg';
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 2000);
       });
     });
-    var td = pre.parentNode;
-    if (td) td.insertBefore(btn, td.firstChild);
+    var parent = pre.parentNode;
+    if (parent) parent.insertBefore(btn, parent.firstChild);
   });
 });

@@ -90,49 +90,46 @@ p.footer a, p.footer a:visited {
 
 /* Example page */
 div.example {
-  width: 960px;
+  width: 1060px;
   max-width: calc(100% - 32px);
   margin: 40px auto 120px;
 }
 
-div.example table {
+div.segment {
+  display: flex;
+  gap: 36px;
   margin-top: 12px;
   margin-bottom: 16px;
-  width: 100%;
 }
 
-td.docs {
-  width: 420px;
-  max-width: 420px;
-  min-width: 420px;
-  vertical-align: top;
-  text-align: left;
-  padding-right: 12px;
+div.docs {
+  flex: 0 0 420px;
+  min-width: 0;
 }
-td.docs p {
+div.docs p {
   padding: 5px 0 12px 0;
   line-height: 1.65;
 }
 
-td.code {
-  width: 540px;
-  max-width: 540px;
-  min-width: 540px;
-  padding: 10px 12px;
-  vertical-align: top;
-  background: var(--bg-code);
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
+div.code {
+  flex: 1;
+  min-width: 0;
 }
-
-td.code.empty {
-  background: var(--bg-primary);
-  border: none;
-}
-
-td.code pre {
+div.code pre {
   margin: 0;
   overflow-x: auto;
+  background: var(--bg-code);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  font-family: "Menlo", "Monaco", "Consolas", "Lucida Console", monospace;
+}
+
+div.code.empty pre {
+  background: var(--bg-primary);
+  border: none;
 }
 
 p.next {
@@ -179,7 +176,7 @@ pre, code {
 .go { color: #8b949e; }                         /* Shell output */
 
 /* Shell output blocks in docs column */
-td.docs pre {
+div.docs pre {
   background: var(--bg-code);
   border: 1px solid var(--border-color);
   border-radius: 6px;
@@ -190,8 +187,8 @@ td.docs pre {
   line-height: 1.55;
   overflow-x: auto;
 }
-td.docs pre .gp,
-td.docs pre .go {
+div.docs pre .gp,
+div.docs pre .go {
   font-family: inherit;
   font-size: inherit;
 }
@@ -205,22 +202,20 @@ td.docs pre .go {
   font-size: 0.9em;
 }
 
-/* Responsive: stack docs and code on narrow screens */
+/* Responsive: stack code on top, docs below */
 @media (max-width: 900px) {
-  div.example table, div.example tbody,
-  div.example tr, div.example td.docs,
-  div.example td.code {
-    display: block;
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 100% !important;
-    padding-right: 0;
+  div.segment {
+    flex-direction: column;
+    gap: 8px;
   }
-  td.code {
-    border-radius: 6px;
-    margin-top: 8px;
+  div.code {
+    order: -1;
   }
-  td.docs p {
+  div.docs {
+    flex: none;
+    width: 100%;
+  }
+  div.docs p {
     padding-bottom: 6px;
   }
 }

@@ -337,7 +337,7 @@ render_segments :: proc(segments: []Segment) -> string {
 	rows := make([dynamic]string)
 
 	for seg in segments {
-		row := fmt.tprintf("<table><tr><td class=\"docs\">%s</td><td class=\"code\"><pre>%s</pre></td></tr></table>", seg.docs, seg.code)
+		row := fmt.tprintf("<div class=\"segment\"><div class=\"docs\">%s</div><div class=\"code\"><pre>%s</pre></div></div>", seg.docs, seg.code)
 		append(&rows, row)
 	}
 
