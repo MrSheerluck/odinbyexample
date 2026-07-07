@@ -1,0 +1,30 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Odin
+        run: |
+          curl -L https://github.com/odin-lang/Odin/releases/download/dev-2026-07/odin-ubuntu-amd64-dev-2026-07.tar.gz | tar xz
+          sudo cp odin /usr/local/bin/
+          sudo cp -r base core vendor /usr/local/share/odin/
+          echo "ODIN_ROOT=/usr/local/share/odin" >> $GITHUB_ENV
+
+      - name: Build site
+        run: |
+          odin build tools/build.odin -file -out:tools/build
+          ./tools/build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: pages deploy public --project-name=odinbyexample
