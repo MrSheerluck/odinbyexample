@@ -160,7 +160,7 @@ parse_example :: proc(dir: string) -> (title: string, segments: []Segment, ok: b
 		})
 	}
 
-	title = strings.clone(dir)
+	title = format_title(dir)
 	return title, segs[:], true
 }
 
@@ -246,6 +246,8 @@ highlight_line :: proc(line: string) -> string {
 	result = replace_tokens(result, types[:], "kt")
 	result = replace_tokens(result, constants[:], "kc")
 	result = replace_tokens(result, builtins[:], "nb")
+	result = highlight_strings(result)
+	result = highlight_numbers(result)
 
 	return result
 }
@@ -340,4 +342,143 @@ render_prev_next :: proc(examples: []string, idx: int) -> string {
 	}
 
 	return fmt.tprintf("<p class=\"next\">%s</p>", strings.join(parts[:], " | "))
+}
+
+highlight_strings :: proc(text: string) -> string {
+	result := make([dynamic]byte)
+	i := 0
+
+	for i < len(text) {
+		if text[i] == '"' {
+			// Double-quoted string
+			append(&result, '<', 's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', '"', '>')
+			append(&result, text[i])
+			i += 1
+			for i < len(text) {
+				if text[i] == '\\' && i+1 < len(text) {
+					append(&result, text[i], text[i+1])
+					i += 2
+				} else if text[i] == '"' {
+					append(&result, text[i])
+					i += 1
+					break
+				} else {
+					append(&result, text[i])
+					i += 1
+				}
+			}
+			append(&result, '<', '/', 's', 'p', 'a', 'n', '>')
+		} else if text[i] == '`' {
+			// Raw string literal
+			append(&result, '<', 's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', '"', '>')
+			append(&result, text[i])
+			i += 1
+			for i < len(text) && text[i] != '`' {
+				append(&result, text[i])
+				i += 1
+			}
+			if i < len(text) {
+				append(&result, text[i])
+				i += 1
+			}
+			append(&result, '<', '/', 's', 'p', 'a', 'n', '>')
+		} else if text[i] == '\'' {
+			// Character literal
+			append(&result, '<', 's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 's', 'c', '"', '>')
+			append(&result, text[i])
+			i += 1
+			for i < len(text) {
+				if text[i] == '\\' && i+1 < len(text) {
+					append(&result, text[i], text[i+1])
+					i += 2
+				} else if text[i] == '\'' {
+					append(&result, text[i])
+					i += 1
+					break
+				} else {
+					append(&result, text[i])
+					i += 1
+				}
+			}
+			append(&result, '<', '/', 's', 'p', 'a', 'n', '>')
+		} else {
+			append(&result, text[i])
+			i += 1
+		}
+	}
+
+	return string(result[:])
+}
+
+highlight_numbers :: proc(text: string) -> string {
+	result := make([dynamic]byte)
+	i := 0
+
+	for i < len(text) {
+		r := rune(text[i])
+		if (r >= '0' && r <= '9') {
+			// Check previous char isn't already inside a span
+			start := i
+			if i > 0 && text[i-1] == '>' {
+				// Already inside a tag (likely a span), skip
+				append(&result, text[i])
+				i += 1
+				continue
+			}
+			had_dot := false
+			had_x := false
+			for i < len(text) {
+				c := text[i]
+				if c == '.' && !had_dot {
+					had_dot = true
+					i += 1
+					continue
+				}
+				if (c == 'x' || c == 'X') && i == start + 1 && text[start] == '0' && !had_dot {
+					had_x = true
+					i += 1
+					continue
+				}
+				if (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f') || (c >= 'A' && c <= 'F') {
+					i += 1
+					continue
+				}
+				if c == '_' {
+					i += 1
+					continue
+				}
+				break
+			}
+			append(&result, '<', 's', 'p', 'a', 'n', ' ', 'c', 'l', 'a', 's', 's', '=', '"', 'm', '"', '>')
+			for j := start; j < i; j += 1 {
+				append(&result, text[j])
+			}
+			append(&result, '<', '/', 's', 'p', 'a', 'n', '>')
+		} else {
+			append(&result, text[i])
+			i += 1
+		}
+	}
+
+	return string(result[:])
+}
+
+format_title :: proc(dir: string) -> string {
+	result, _ := strings.replace_all(dir, "-", " ")
+	result, _ = strings.replace_all(result, "or_else", "Or Else")
+	result, _ = strings.replace_all(result, "or_return", "Or Return")
+	result, _ = strings.replace_all(result, "or_break", "Or Break")
+	result, _ = strings.replace_all(result, "or_continue", "Or Continue")
+	result, _ = strings.replace_all(result, "soa", "SOA")
+	result, _ = strings.replace_all(result, "cstring", "CString")
+	result, _ = strings.replace_all(result, "typeid", "Type ID")
+	result, _ = strings.replace_all(result, "typeinfo", "Type Info")
+	result, _ = strings.replace_all(result, "raw_data", "Raw Data")
+	if len(result) > 0 && result[0] >= 'a' && result[0] <= 'z' {
+		first := rune(result[0])
+		first = first - 32  // to uppercase
+		rest := result[1:]
+		return fmt.tprintf("%c%s", first, rest)
+	}
+	return result
 }
