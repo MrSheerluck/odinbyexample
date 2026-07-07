@@ -138,7 +138,6 @@ parse_example :: proc(dir: string) -> (title: string, segments: []Segment, ok: b
 			}
 			if strings.has_prefix(line, "//") {
 				doc_line := strings.trim_prefix(line, "//")
-				doc_line = strings.trim_space(doc_line)
 				append(&docs_lines, doc_line)
 				continue
 			}
@@ -169,28 +168,49 @@ render_docs :: proc(lines: []string) -> string {
 		return ""
 	}
 
-	paragraphs := make([dynamic]string)
+	result := make([dynamic]string)
 	current := make([dynamic]string)
 
-	for line in lines {
-		if line == "" {
-			if len(current) > 0 {
-				append(&paragraphs, strings.join(current[:], " "))
-				clear(&current)
-			}
-		} else {
-			append(&current, line)
+	flush_paragraph :: proc(result: ^[dynamic]string, current: ^[dynamic]string) {
+		if len(current) > 0 {
+			append(result, fmt.tprintf("<p>%s</p>", strings.join(current[:], " ")))
+			clear(current)
 		}
 	}
-	if len(current) > 0 {
-		append(&paragraphs, strings.join(current[:], " "))
+
+	i := 0
+	for i < len(lines) {
+		line := lines[i]
+
+		if strings.has_prefix(strings.trim_space(line), "$ ") {
+			flush_paragraph(&result, &current)
+			pre_lines := make([dynamic]string)
+
+			for i < len(lines) {
+				l := lines[i]
+				trimmed := strings.trim_space(l)
+				if strings.has_prefix(trimmed, "$ ") {
+					append(&pre_lines, fmt.tprintf("<span class=\"gp\">%s</span>", escape_html(trimmed)))
+				} else if strings.has_prefix(l, "  ") {
+					append(&pre_lines, fmt.tprintf("<span class=\"go\">%s</span>", escape_html(trimmed)))
+				} else {
+					break
+				}
+				i += 1
+			}
+			append(&result, fmt.tprintf("<pre>%s</pre>", strings.join(pre_lines[:], "\n")))
+			continue
+		}
+
+		if line == "" || strings.trim_space(line) == "" {
+			flush_paragraph(&result, &current)
+		} else {
+			append(&current, strings.trim_space(line))
+		}
+		i += 1
 	}
 
-	result := make([dynamic]string)
-	for p in paragraphs {
-		append(&result, fmt.tprintf("<p>%s</p>", p))
-	}
-
+	flush_paragraph(&result, &current)
 	return strings.join(result[:], "\n")
 }
 

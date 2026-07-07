@@ -175,6 +175,26 @@ pre, code {
 .p  { color: var(--text-primary); }             /* Punctuation */
 .nx { color: var(--text-primary); }             /* Name.Other */
 .nf { color: #d2a8ff; }                         /* Name.Function */
+.gp { color: #d2a8ff; }                         /* Shell prompt */
+.go { color: #8b949e; }                         /* Shell output */
+
+/* Shell output blocks in docs column */
+td.docs pre {
+  background: var(--bg-code);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 4px 0 12px 0;
+  font-family: "Menlo", "Monaco", "Consolas", "Lucida Console", monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-x: auto;
+}
+td.docs pre .gp,
+td.docs pre .go {
+  font-family: inherit;
+  font-size: inherit;
+}
 
 /* Inline code (non-pre) */
 :not(pre) > code {
