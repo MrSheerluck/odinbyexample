@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Variables</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="variables">
+    <h2><a href="/">Odin by Example</a>: Variables</h2>
+    <div class="segment"><div class="docs"><p>In Odin, variables are declared with := and the compiler checks that every declared variable is used. The type of a variable is inferred from the value you assign to it.</p>
+<pre><span class="gp">$ odin run variables.odin -file</span>
+<span class="go">initial</span>
+<span class="go">1 2</span>
+<span class="go">true</span>
+<span class="go">0</span>
+<span class="go">apple</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// := declares and assigns a variable in one step.</span>
+<span class="c1">	// The type is inferred from the value.</span>
+	a := <span class="s">"initial"</span>
+	fmt.println(a)
+
+<span class="c1">	// You can declare multiple variables at once.</span>
+	b, c := <span class="m">1</span>, <span class="m">2</span>
+	fmt.println(b, c)
+
+<span class="c1">	// The type is inferred for each variable.</span>
+	d := <span class="kc">true</span>
+	fmt.println(d)
+
+<span class="c1">	// Variables are zero-valued if you assign the</span>
+<span class="c1">	// zero value explicitly or use a type annotation</span>
+<span class="c1">	// without a value. For int, the zero value is 0.</span>
+	e: <span class="kt">int</span>
+	fmt.println(e)
+
+<span class="c1">	// := works everywhere. You can also write the</span>
+<span class="c1">	// type explicitly when you want to be clear.</span>
+	f: <span class="kt">string</span> = <span class="s">"apple"</span>
+	fmt.println(f)
+}
+</pre></div></div>
+    <p class="next"><a href="/values">&larr; values</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
