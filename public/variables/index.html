@@ -9,7 +9,8 @@
 <body>
   <div class="example" id="variables">
     <h2><a href="/">Odin by Example</a>: Variables</h2>
-    <div class="segment"><div class="docs"><p>In Odin, variables are declared with := and the compiler checks that every declared variable is used. The type of a variable is inferred from the value you assign to it.</p>
+    <div class="segment"><div class="docs"><p>Variables store values that can be changed during program execution.</p>
+<p>Odin supports both type inference and explicit type annotations. Every declared variable must be used.</p>
 <pre><span class="gp">$ odin run variables.odin -file</span>
 <span class="go">initial</span>
 <span class="go">1 2</span>
@@ -20,27 +21,24 @@
 <span class="k">import</span> <span class="s">"core:fmt"</span>
 
 main :: <span class="k">proc</span>() {
-<span class="c1">	// := declares and assigns a variable in one step.</span>
-<span class="c1">	// The type is inferred from the value.</span>
+<span class="c1">	// Declare a variable with type inference.</span>
 	a := <span class="s">"initial"</span>
 	fmt.println(a)
 
-<span class="c1">	// You can declare multiple variables at once.</span>
+<span class="c1">	// Declare multiple variables at once.</span>
 	b, c := <span class="m">1</span>, <span class="m">2</span>
 	fmt.println(b, c)
 
-<span class="c1">	// The type is inferred for each variable.</span>
+<span class="c1">	// The compiler infers the type from the value.</span>
 	d := <span class="kc">true</span>
 	fmt.println(d)
 
-<span class="c1">	// Variables are zero-valued if you assign the</span>
-<span class="c1">	// zero value explicitly or use a type annotation</span>
-<span class="c1">	// without a value. For int, the zero value is 0.</span>
+<span class="c1">	// Variables declared without an initializer</span>
+<span class="c1">	// receive the zero value of their type.</span>
 	e: <span class="kt">int</span>
 	fmt.println(e)
 
-<span class="c1">	// := works everywhere. You can also write the</span>
-<span class="c1">	// type explicitly when you want to be clear.</span>
+<span class="c1">	// You can also specify the type explicitly.</span>
 	f: <span class="kt">string</span> = <span class="s">"apple"</span>
 	fmt.println(f)
 }

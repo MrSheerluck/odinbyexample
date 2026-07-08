@@ -1,43 +1,43 @@
-// Odin has several basic value types. These include
-// strings, integers, floats, and booleans. They are the
-// fundamental building blocks used in every program.
+// Odin has several basic types. These include strings,
+// integers, floating-point numbers, and booleans. They
+// are the fundamental building blocks used in programs.
 //
-// Strings are used to hold text. You can join them
-// together with the + operator.
+// Strings hold UTF-8 encoded text. They can be
+// concatenated with the + operator.
 //
-// Integers represent whole numbers. Odin has signed types
-// (int, i8 through i128) and unsigned types (uint, u8
-// through u128). Plain int and uint are sized to
-// match your machine's pointer.
+// Integers represent whole numbers. Odin provides signed
+// and unsigned integer types in several sizes, along with
+// platform-sized int and uint types.
 //
-// Floats represent fractional numbers and come in f16,
-// f32, f64, and complex variants. Standard arithmetic
-// works as you would expect.
+// Floating-point numbers represent values with a
+// fractional component. Odin provides f16, f32, and
+// f64 floating-point types.
 //
-// Booleans are either true or false. The usual logical
-// operators work on them: && (and), || (or), ! (not).
+// Booleans have one of two values: true or false.
+// Logical operators include && (and), || (or), and
+// ! (not).
 //
 //   $ odin run values.odin -file
 //   golang
 //   1+1 = 2
-//   7.0/3.0 = 2.3333
+//   7.0/3.0 = 2.3333333333333335
 //   false
 //   true
 //   false
+
 package main
 
 import "core:fmt"
 
 main :: proc() {
-	// Strings can be joined with +.
+	// Concatenate two strings.
 	fmt.println("go" + "lang")
 
-	// Integers and floats use standard arithmetic.
-	// Division produces a float when either operand is a float.
-	fmt.println("1+1 =", 1+1)
-	fmt.println("7.0/3.0 =", 7.0/3.0)
+	// Integer and floating-point arithmetic.
+	fmt.println("1+1 =", 1 + 1)
+	fmt.println("7.0/3.0 =", 7.0 / 3.0)
 
-	// Booleans can be combined with logical operators.
+	// Boolean logic.
 	fmt.println(true && false)
 	fmt.println(true || false)
 	fmt.println(!true)

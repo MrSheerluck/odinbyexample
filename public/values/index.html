@@ -9,15 +9,15 @@
 <body>
   <div class="example" id="values">
     <h2><a href="/">Odin by Example</a>: Values</h2>
-    <div class="segment"><div class="docs"><p>Odin has several basic value types. These include strings, integers, floats, and booleans. They are the fundamental building blocks used in every program.</p>
-<p>Strings are used to hold text. You can join them together with the + operator.</p>
-<p>Integers represent whole numbers. Odin has signed types (int, i8 through i128) and unsigned types (uint, u8 through u128). Plain int and uint are sized to match your machine's pointer.</p>
-<p>Floats represent fractional numbers and come in f16, f32, f64, and complex variants. Standard arithmetic works as you would expect.</p>
-<p>Booleans are either true or false. The usual logical operators work on them: && (and), || (or), ! (not).</p>
+    <div class="segment"><div class="docs"><p>Odin has several basic types. These include strings, integers, floating-point numbers, and booleans. They are the fundamental building blocks used in programs.</p>
+<p>Strings hold UTF-8 encoded text. They can be concatenated with the + operator.</p>
+<p>Integers represent whole numbers. Odin provides signed and unsigned integer types in several sizes, along with platform-sized int and uint types.</p>
+<p>Floating-point numbers represent values with a fractional component. Odin provides f16, f32, and f64 floating-point types.</p>
+<p>Booleans have one of two values: true or false. Logical operators include && (and), || (or), and ! (not).</p>
 <pre><span class="gp">$ odin run values.odin -file</span>
 <span class="go">golang</span>
 <span class="go">1+1 = 2</span>
-<span class="go">7.0/3.0 = 2.3333</span>
+<span class="go">7.0/3.0 = 2.3333333333333335</span>
 <span class="go">false</span>
 <span class="go">true</span>
 <span class="go">false</span></pre></div><div class="code"><pre><span class="k">package</span> main
@@ -25,15 +25,14 @@
 <span class="k">import</span> <span class="s">"core:fmt"</span>
 
 main :: <span class="k">proc</span>() {
-<span class="c1">	// Strings can be joined with +.</span>
+<span class="c1">	// Concatenate two strings.</span>
 	fmt.println(<span class="s">"go"</span> + <span class="s">"lang"</span>)
 
-<span class="c1">	// Integers and floats use standard arithmetic.</span>
-<span class="c1">	// Division produces a float when either operand is a float.</span>
-	fmt.println(<span class="s">"<span class="m">1</span>+<span class="m">1</span> ="</span>, <span class="m">1</span>+<span class="m">1</span>)
-	fmt.println(<span class="s">"<span class="m">7.0</span>/<span class="m">3.0</span> ="</span>, <span class="m">7.0</span>/<span class="m">3.0</span>)
+<span class="c1">	// Integer and floating-point arithmetic.</span>
+	fmt.println(<span class="s">"<span class="m">1</span>+<span class="m">1</span> ="</span>, <span class="m">1</span> + <span class="m">1</span>)
+	fmt.println(<span class="s">"<span class="m">7.0</span>/<span class="m">3.0</span> ="</span>, <span class="m">7.0</span> / <span class="m">3.0</span>)
 
-<span class="c1">	// Booleans can be combined with logical operators.</span>
+<span class="c1">	// Boolean logic.</span>
 	fmt.println(<span class="kc">true</span> &amp;&amp; <span class="kc">false</span>)
 	fmt.println(<span class="kc">true</span> || <span class="kc">false</span>)
 	fmt.println(!<span class="kc">true</span>)
