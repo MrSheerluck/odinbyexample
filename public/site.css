@@ -1,0 +1,221 @@
+/* CSS reset */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a,
+pre, code, img, ul, ol, li, table, tr, td, th {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+body { line-height: 1; }
+ol, ul { list-style: none; }
+table { border-collapse: collapse; border-spacing: 0; }
+
+/* Odin brand colors */
+:root {
+  --bg-primary:    #0d1117;
+  --bg-code:       #182028;
+  --bg-header:     #1e4976;
+  --bg-footer:     #242f3f;
+  --bg-alt:        #1c1c20;
+  --text-primary:  #e0f0ff;
+  --text-secondary:#8b949e;
+  --accent-orange: #fa4;
+  --link-blue:     #7aade5;
+  --border-color:  #30363d;
+}
+
+/* Layout */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto,
+               "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+h2 {
+  font-size: 28px;
+  line-height: 1.3;
+  margin-top: 32px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+h2 a {
+  text-decoration: none;
+  color: var(--link-blue);
+}
+
+a, a:visited {
+  color: var(--link-blue);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--accent-orange);
+  text-decoration: underline;
+}
+
+p.footer {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin-top: 40px;
+}
+p.footer a, p.footer a:visited {
+  color: var(--text-secondary);
+}
+
+/* Index page */
+#intro {
+  width: 520px;
+  max-width: calc(100% - 32px);
+  margin: 60px auto 120px;
+}
+#intro p {
+  padding-top: 16px;
+  line-height: 1.7;
+}
+#intro ul {
+  padding-top: 20px;
+}
+#intro ul li {
+  padding: 4px 0;
+}
+#intro ul li a {
+  font-family: "Menlo", "Monaco", "Consolas", "Lucida Console", monospace;
+  font-size: 14px;
+}
+
+/* Example page */
+div.example {
+  width: 1060px;
+  max-width: calc(100% - 32px);
+  margin: 40px auto 120px;
+}
+
+div.segment {
+  display: flex;
+  gap: 36px;
+  margin-top: 12px;
+  margin-bottom: 16px;
+}
+
+div.docs {
+  flex: 0 0 420px;
+  min-width: 0;
+}
+div.docs p {
+  padding: 5px 0 12px 0;
+  line-height: 1.65;
+}
+
+div.code {
+  flex: 1;
+  min-width: 0;
+}
+div.code pre {
+  margin: 0;
+  overflow-x: auto;
+  background: var(--bg-code);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.55;
+  font-family: "Menlo", "Monaco", "Consolas", "Lucida Console", monospace;
+}
+
+div.code.empty pre {
+  background: var(--bg-primary);
+  border: none;
+}
+
+p.next {
+  margin: 24px 0 12px;
+  font-size: 0.9rem;
+}
+p.next a {
+  margin: 0 8px;
+}
+
+img.copy {
+  height: 16px;
+  width: 16px;
+  float: right;
+  cursor: pointer;
+  opacity: 0.5;
+}
+img.copy:hover {
+  opacity: 1;
+}
+
+pre, code {
+  font-size: 13px;
+  line-height: 1.55;
+  font-family: "Menlo", "Monaco", "Consolas", "Lucida Console", monospace;
+}
+
+/* Odin syntax highlighting (github-dark inspired) */
+.c1 { color: #8b949e;  font-style: italic; }  /* Comment */
+.k  { color: #ff7b72;  font-weight: bold; }     /* Keyword */
+.kc { color: #79c0ff; }                         /* Keyword.Constant */
+.kd { color: #ff7b72;  font-weight: bold; }     /* Keyword.Declaration */
+.kt { color: #ff7b72; }                         /* Keyword.Type */
+.nb { color: #d2a8ff; }                         /* Name.Builtin */
+.m  { color: #79c0ff; }                         /* Number */
+.s  { color: #a5d6ff; }                         /* String */
+.sc { color: #a5d6ff; }                         /* String.Char */
+.nd { color: #ffa657; }                         /* Name.Directive */
+.o  { color: var(--text-primary); }             /* Operator */
+.p  { color: var(--text-primary); }             /* Punctuation */
+.nx { color: var(--text-primary); }             /* Name.Other */
+.nf { color: #d2a8ff; }                         /* Name.Function */
+.gp { color: #d2a8ff; }                         /* Shell prompt */
+.go { color: #8b949e; }                         /* Shell output */
+
+/* Shell output blocks in docs column */
+div.docs pre {
+  background: var(--bg-code);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin: 4px 0 12px 0;
+  font-family: "Menlo", "Monaco", "Consolas", "Lucida Console", monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-x: auto;
+}
+div.docs pre .gp,
+div.docs pre .go {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Inline code (non-pre) */
+:not(pre) > code {
+  color: var(--accent-orange);
+  background: rgba(255, 170, 68, 0.1);
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Responsive: stack code on top, docs below */
+@media (max-width: 900px) {
+  div.segment {
+    flex-direction: column;
+    gap: 8px;
+  }
+  div.code {
+    order: -1;
+  }
+  div.docs {
+    flex: none;
+    width: 100%;
+  }
+  div.docs p {
+    padding-bottom: 6px;
+  }
+}

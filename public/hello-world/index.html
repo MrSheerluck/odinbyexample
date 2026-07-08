@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Hello world</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="hello-world">
+    <h2><a href="/">Odin by Example</a>: Hello world</h2>
+    <div class="segment"><div class="docs"><p>Our first program will print the classic "hellope" message, which is Odin's twist on "hello world". Here's the full source code.</p>
+<p>To run the program, put the code in a file and use odin run:</p>
+<pre><span class="gp">$ odin run hello-world.odin -file</span>
+<span class="go">Hellope!</span></pre>
+<p>Sometimes we'll want to build our programs into binaries. We can do this using odin build:</p>
+<pre><span class="gp">$ odin build hello-world.odin -file -out:hello-world</span>
+<span class="gp">$ ls</span>
+<span class="go">hello-world     hello-world.odin</span></pre>
+<p>We can then execute the built binary directly:</p>
+<pre><span class="gp">$ ./hello-world</span>
+<span class="go">Hellope!</span></pre>
+<p>Now that we can run and build basic Odin programs, let's learn more about the language.</p></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+main :: <span class="k">proc</span>() {
+	fmt.println(<span class="s">"Hellope!"</span>)
+}
+</pre></div></div>
+    <p class="next"></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>

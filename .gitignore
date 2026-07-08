@@ -1,4 +1,3 @@
 tools/build
 *.o
 .DS_Store
-public/
