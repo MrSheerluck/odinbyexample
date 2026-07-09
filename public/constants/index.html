@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Constants</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="constants">
+    <h2><a href="/">Odin by Example</a>: Constants</h2>
+    <div class="segment"><div class="docs"><p>Constants are values that are known at compile time and cannot be modified. They are declared using the :: operator.</p>
+<p>Constants can be declared at package scope or inside procedures. They are commonly used for values that never change, such as mathematical values and configuration data.</p>
+<p>Numeric constants are untyped until the compiler needs a concrete type. This allows constant expressions to be evaluated with arbitrary precision before being converted to the required type.</p>
+<pre><span class="gp">$ odin run constants.odin -file</span>
+<span class="go">constant</span>
+<span class="go">6e+11</span>
+<span class="go">600000000000</span>
+<span class="go">0.49999999999999994</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+<span class="k">import</span> <span class="s">"core:math"</span>
+
+<span class="c1">// Package-level constants.</span>
+message :: <span class="s">"constant"</span>
+n :: <span class="m">500000000</span>
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Constants behave like any other value.</span>
+	fmt.println(message)
+
+<span class="c1">	// Constant expressions are evaluated at compile time.</span>
+	d :: <span class="m">3e20</span> / n
+	fmt.println(d)
+
+<span class="c1">	// Convert an untyped numeric constant to i64.</span>
+	fmt.println(i<span class="m">64</span>(d))
+
+<span class="c1">	// This is also an untyped constant.</span>
+	angle :: math.pi / <span class="m">6</span>
+
+<span class="c1">	// math.sin expects an f64, so angle is</span>
+<span class="c1">	// automatically converted.</span>
+	fmt.println(math.sin(angle))
+}
+</pre></div></div>
+    <p class="next"><a href="/variables">&larr; variables</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
