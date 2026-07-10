@@ -14,12 +14,11 @@
 //   constant
 //   6e+11
 //   600000000000
-//   0.49999999999999994
+//   600000000000.0
 
 package main
 
 import "core:fmt"
-import "core:math"
 
 // Package-level constants.
 message :: "constant"
@@ -36,10 +35,6 @@ main :: proc() {
 	// Convert an untyped numeric constant to i64.
 	fmt.println(i64(d))
 
-	// This is also an untyped constant.
-	angle :: math.pi / 6
-
-	// math.sin expects an f64, so angle is
-	// automatically converted.
-	fmt.println(math.sin(angle))
+	// The same constant can be converted to a different type.
+	fmt.println(f64(d))
 }

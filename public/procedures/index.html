@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Procedures</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="procedures">
+    <h2><a href="/">Odin by Example</a>: Procedures</h2>
+    <div class="segment"><div class="docs"><p>Procedures are reusable blocks of code that perform a specific task. If you're coming from another language, they're similar to functions.</p>
+<p>A procedure can accept parameters and return values. It is declared using the proc keyword.</p>
+<pre><span class="gp">$ odin run procedures.odin -file</span>
+<span class="go">Hello, Odin!</span>
+<span class="go">5 + 7 = 12</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+<span class="c1">// This procedure takes a string parameter and</span>
+<span class="c1">// doesn't return a value.</span>
+greet :: <span class="k">proc</span>(name: <span class="kt">string</span>) {
+	fmt.println(<span class="s">"Hello,"</span>, name + <span class="s">"!"</span>)
+}
+
+<span class="c1">// This procedure takes two integers and</span>
+<span class="c1">// returns their sum.</span>
+add :: <span class="k">proc</span>(a, b: <span class="kt">int</span>) -&gt; <span class="kt">int</span> {
+	<span class="k">return</span> a + b
+}
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Call a procedure by passing arguments.</span>
+	greet(<span class="s">"Odin"</span>)
+
+<span class="c1">	// Use the returned value.</span>
+	sum := add(<span class="m">5</span>, <span class="m">7</span>)
+	fmt.println(<span class="s">"<span class="m">5</span> + <span class="m">7</span> ="</span>, sum)
+}
+</pre></div></div>
+    <p class="next"><a href="/constants">&larr; constants</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>

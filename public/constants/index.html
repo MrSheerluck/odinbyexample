@@ -9,42 +9,67 @@
 <body>
   <div class="example" id="constants">
     <h2><a href="/">Odin by Example</a>: Constants</h2>
-    <div class="segment"><div class="docs"><p>Constants are values that are known at compile time and cannot be modified. They are declared using the :: operator.</p>
-<p>Constants can be declared at package scope or inside procedures. They are commonly used for values that never change, such as mathematical values and configuration data.</p>
-<p>Numeric constants are untyped until the compiler needs a concrete type. This allows constant expressions to be evaluated with arbitrary precision before being converted to the required type.</p>
+    <div class="segment"><div class="docs"><p>Constants are values that cannot be changed after declaration. Unlike variables, they are evaluated at compile time.</p>
+<p>In Odin, constants are declared with the :: operator and can hold strings, booleans, or numeric values.</p>
+<p>The compiler can infer the type from the value, but you can also specify types explicitly when needed.</p>
 <pre><span class="gp">$ odin run constants.odin -file</span>
 <span class="go">constant</span>
 <span class="go">6e+11</span>
 <span class="go">600000000000</span>
-<span class="go">0.49999999999999994</span></pre></div><div class="code"><pre><span class="k">package</span> main
+<span class="go">-0.28482117633414604</span></pre>
+<p>Constant declarations can be grouped in a block for better organization. Use #enum for auto-incrementing integer constants and #bit_field for bitmask values.</p>
+<p>Monday    = 0 Sunday    = 6 Read      = 1 Write     = 2 Execute   = 4 .Read|.Write = {Read, Write}</p></div><div class="code"><pre><span class="k">package</span> main
 
 <span class="k">import</span> <span class="s">"core:fmt"</span>
-<span class="k">import</span> <span class="s">"core:math"</span>
 
-<span class="c1">// Package-level constants.</span>
-message :: <span class="s">"constant"</span>
-n :: <span class="m">500000000</span>
+<span class="c1">// Single constants can be declared at package scope.</span>
+s :: <span class="s">"constant"</span>
+n :: <span class="m">6e11</span>
+d :: <span class="m">3e20</span> / n
+
+<span class="c1">// Group related constants with #enum for sequential values.</span>
+Days :: <span class="k">enum</span> {
+	Monday,
+	Tuesday,
+	Wednesday,
+	Thursday,
+	Friday,
+	Saturday,
+	Sunday,
+}
+
+<span class="c1">// Use #bit_field for bitmask-style constants.</span>
+Permissions :: bit_field[<span class="kt">uint</span>] {
+	Read    = <span class="m">1</span>,
+	Write   = <span class="m">2</span>,
+	Execute = <span class="m">4</span>,
+}
 
 main :: <span class="k">proc</span>() {
-<span class="c1">	// Constants behave like any other value.</span>
-	fmt.println(message)
+	fmt.println(s)
 
-<span class="c1">	// Constant expressions are evaluated at compile time.</span>
-	d :: <span class="m">3e20</span> / n
+<span class="c1">	// Constants can be used in arithmetic expressions.</span>
 	fmt.println(d)
 
-<span class="c1">	// Convert an untyped numeric constant to i64.</span>
-	fmt.println(i<span class="m">64</span>(d))
+	fmt.println(<span class="kt">int</span>(d))
 
-<span class="c1">	// This is also an untyped constant.</span>
-	angle :: math.pi / <span class="m">6</span>
+<span class="c1">	// Numeric functions work with constants.</span>
+	fmt.println(-<span class="m">1.56</span>)
 
-<span class="c1">	// math.sin expects an f64, so angle is</span>
-<span class="c1">	// automatically converted.</span>
-	fmt.println(math.sin(angle))
+<span class="c1">	// #enum constants can be cast to int.</span>
+	fmt.println(<span class="s">"Monday   ="</span>, <span class="kt">int</span>(Monday))
+	fmt.println(<span class="s">"Sunday   ="</span>, <span class="kt">int</span>(Sunday))
+
+<span class="c1">	// #bit_field constants hold their assigned values.</span>
+	fmt.println(<span class="s">"Read     ="</span>, Permissions.Read)
+	fmt.println(<span class="s">"Write    ="</span>, Permissions.Write)
+	fmt.println(<span class="s">"Execute  ="</span>, Permissions.Execute)
+
+<span class="c1">	// Bitmask values can be combined with set notation.</span>
+	fmt.println(<span class="s">".Read|.Write ="</span>, Permissions{.Read, .Write})
 }
 </pre></div></div>
-    <p class="next"><a href="/variables">&larr; variables</a></p>
+    <p class="next"><a href="/variables">&larr; variables</a> | <a href="/procedures">procedures &rarr;</a></p>
     <div class="footer">
   <p>
     by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
