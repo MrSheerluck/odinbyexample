@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Multiple return values</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="multiple-return-values">
+    <h2><a href="/">Odin by Example</a>: Multiple return values</h2>
+    <div class="segment"><div class="docs"><p>Procedures in Odin can return multiple values. This is commonly used to return a result along with additional information, such as an error or status.</p>
+<p>Return types are listed inside parentheses after the -> operator. Multiple values are returned using the return statement.</p>
+<pre><span class="gp">$ odin run multiple-return-values.odin -file</span>
+<span class="go">7 3</span>
+<span class="go">Odin language</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+<span class="c1">// Divide returns both the quotient and remainder.</span>
+divide :: <span class="k">proc</span>(a, b: <span class="kt">int</span>) -&gt; (<span class="kt">int</span>, <span class="kt">int</span>) {
+	<span class="k">return</span> a / b, a % b
+}
+
+<span class="c1">// split returns two strings.</span>
+split :: <span class="k">proc</span>() -&gt; (<span class="kt">string</span>, <span class="kt">string</span>) {
+	<span class="k">return</span> <span class="s">"Odin"</span>, <span class="s">"language"</span>
+}
+
+main :: <span class="k">proc</span>() {
+	quotient, remainder := divide(<span class="m">31</span>, <span class="m">4</span>)
+	fmt.println(quotient, remainder)
+
+	first, second := split()
+	fmt.println(first, second)
+}
+</pre></div></div>
+    <p class="next"><a href="/procedures">&larr; procedures</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>

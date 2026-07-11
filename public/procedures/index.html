@@ -20,7 +20,7 @@
 <span class="c1">// This procedure takes a string parameter and</span>
 <span class="c1">// doesn't return a value.</span>
 greet :: <span class="k">proc</span>(name: <span class="kt">string</span>) {
-	fmt.println(<span class="s">"Hello,"</span>, name + <span class="s">"!"</span>)
+	fmt.printfln(<span class="s">"Hello, {}!"</span>, name)
 }
 
 <span class="c1">// This procedure takes two integers and</span>
@@ -33,12 +33,12 @@ main :: <span class="k">proc</span>() {
 <span class="c1">	// Call a procedure by passing arguments.</span>
 	greet(<span class="s">"Odin"</span>)
 
-<span class="c1">	// Use the returned value.</span>
+<span class="c1">	// Store and use the returned value.</span>
 	sum := add(<span class="m">5</span>, <span class="m">7</span>)
 	fmt.println(<span class="s">"<span class="m">5</span> + <span class="m">7</span> ="</span>, sum)
 }
 </pre></div></div>
-    <p class="next"><a href="/constants">&larr; constants</a></p>
+    <p class="next"><a href="/constants">&larr; constants</a> | <a href="/multiple-return-values">multiple-return-values &rarr;</a></p>
     <div class="footer">
   <p>
     by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
