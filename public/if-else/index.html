@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: If else</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="if-else">
+    <h2><a href="/">Odin by Example</a>: If else</h2>
+    <div class="segment"><div class="docs"><p>The if statement lets you execute code only when a condition is true.</p>
+<p>Conditions must evaluate to a boolean value. Unlike some languages, Odin does not automatically convert integers or pointers to booleans.</p>
+<p>An optional else block can be used to handle the case when the condition is false.</p>
+<pre><span class="gp">$ odin run if.odin -file</span>
+<span class="go">7 is odd</span>
+<span class="go">you can drive</span>
+<span class="go">both conditions are true</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Execute a block only if the condition is true.</span>
+	<span class="k">if</span> <span class="m">7</span> % <span class="m">2</span> == <span class="m">0</span> {
+		fmt.println(<span class="s">"<span class="m">7</span> is even"</span>)
+	} <span class="k">else</span> {
+		fmt.println(<span class="s">"<span class="m">7</span> is odd"</span>)
+	}
+
+	age := <span class="m">20</span>
+
+<span class="c1">	// else runs when the condition is false.</span>
+	<span class="k">if</span> age &gt;= <span class="m">18</span> {
+		fmt.println(<span class="s">"you can drive"</span>)
+	} <span class="k">else</span> {
+		fmt.println(<span class="s">"you cannot drive"</span>)
+	}
+
+<span class="c1">	// Conditions can combine multiple expressions.</span>
+	<span class="k">if</span> age &gt;= <span class="m">18</span> &amp;&amp; age &lt; <span class="m">65</span> {
+		fmt.println(<span class="s">"both conditions are true"</span>)
+	}
+}
+</pre></div></div>
+    <p class="next"><a href="/multiple-return-values">&larr; multiple-return-values</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
