@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Switch</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="switch">
+    <h2><a href="/">Odin by Example</a>: Switch</h2>
+    <div class="segment"><div class="docs"><p>Switch selects one of several code blocks based on the value of an expression.</p>
+<p>Cases do not fall through by default. Multiple values can be matched in a single case by separating them with commas.</p>
+<p>A switch can also be written without an expression, making it behave like a series of if/else statements.</p>
+<pre><span class="gp">$ odin run switch.odin -file</span>
+<span class="go">today is a weekday</span>
+<span class="go">good evening</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+main :: <span class="k">proc</span>() {
+	day := <span class="s">"Wednesday"</span>
+
+<span class="c1">	// Match against the value of an expression.</span>
+	<span class="k">switch</span> day {
+	<span class="k">case</span> <span class="s">"Saturday"</span>, <span class="s">"Sunday"</span>:
+		fmt.println(<span class="s">"today is a weekend"</span>)
+	<span class="k">case</span> <span class="s">"Monday"</span>, <span class="s">"Tuesday"</span>, <span class="s">"Wednesday"</span>, <span class="s">"Thursday"</span>, <span class="s">"Friday"</span>:
+		fmt.println(<span class="s">"today is a weekday"</span>)
+	<span class="k">case</span>:
+		fmt.println(<span class="s">"unknown day"</span>)
+	}
+
+	hour := <span class="m">21</span>
+
+<span class="c1">	// A switch without an expression behaves like</span>
+<span class="c1">	// a chain of if/else statements.</span>
+	<span class="k">switch</span> {
+	<span class="k">case</span> hour &lt; <span class="m">12</span>:
+		fmt.println(<span class="s">"good morning"</span>)
+	<span class="k">case</span> hour &lt; <span class="m">18</span>:
+		fmt.println(<span class="s">"good afternoon"</span>)
+	<span class="k">case</span>:
+		fmt.println(<span class="s">"good evening"</span>)
+	}
+}
+</pre></div></div>
+    <p class="next"><a href="/if-else">&larr; if-else</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>

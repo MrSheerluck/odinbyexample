@@ -5,3 +5,4 @@ constants
 procedures
 multiple-return-values
 if-else
+switch
