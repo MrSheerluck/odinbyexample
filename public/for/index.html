@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: For</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="for">
+    <h2><a href="/">Odin by Example</a>: For</h2>
+    <div class="segment"><div class="docs"><p>For is Odin's only looping construct. It can be used as a traditional counted loop, a while-style loop, or an infinite loop.</p>
+<p>The continue statement skips to the next iteration, while break exits the loop early.</p>
+<pre><span class="gp">$ odin run for.odin -file</span>
+<span class="go">0</span>
+<span class="go">1</span>
+<span class="go">2</span>
+<span class="go">while: 0</span>
+<span class="go">while: 1</span>
+<span class="go">infinite loop</span>
+<span class="go">continue</span>
+<span class="go">break</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// A traditional counted loop.</span>
+	<span class="k">for</span> i := <span class="m">0</span>; i &lt; <span class="m">3</span>; i += <span class="m">1</span> {
+		fmt.println(i)
+	}
+
+<span class="c1">	// A while-style loop.</span>
+	j := <span class="m">0</span>
+	<span class="k">for</span> j &lt; <span class="m">2</span> {
+		fmt.println(<span class="s">"while:"</span>, j)
+		j += <span class="m">1</span>
+	}
+
+<span class="c1">	// An infinite loop.</span>
+	<span class="k">for</span> {
+		fmt.println(<span class="s">"infinite loop"</span>)
+		<span class="k">break</span>
+	}
+
+<span class="c1">	// continue skips the rest of the current iteration.</span>
+	<span class="k">for</span> i := <span class="m">0</span>; i &lt; <span class="m">3</span>; i += <span class="m">1</span> {
+		<span class="k">if</span> i == <span class="m">1</span> {
+			fmt.println(<span class="s">"continue"</span>)
+			<span class="k">continue</span>
+		}
+
+		<span class="k">if</span> i == <span class="m">2</span> {
+			fmt.println(<span class="s">"break"</span>)
+			<span class="k">break</span>
+		}
+	}
+}
+</pre></div></div>
+    <p class="next"><a href="/switch">&larr; switch</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
