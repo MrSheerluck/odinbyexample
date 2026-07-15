@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Range loop</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="range-loop">
+    <h2><a href="/">Odin by Example</a>: Range loop</h2>
+    <div class="segment"><div class="docs"><p>The for-in loop iterates over the elements of a collection. Depending on the collection, you can access the value, the index, or both.</p>
+<pre><span class="gp">$ odin run range-loops.odin -file</span>
+<span class="go">10</span>
+<span class="go">20</span>
+<span class="go">30</span>
+<span class="go">0 10</span>
+<span class="go">1 20</span>
+<span class="go">2 30</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// An array to iterate over.</span>
+	numbers := [<span class="m">3</span>]<span class="kt">int</span>{<span class="m">10</span>, <span class="m">20</span>, <span class="m">30</span>}
+
+<span class="c1">	// Iterate over the values.</span>
+	<span class="k">for</span> value <span class="k">in</span> numbers {
+		fmt.println(value)
+	}
+
+<span class="c1">	// Iterate over both the index and value.</span>
+	<span class="k">for</span> index, value <span class="k">in</span> numbers {
+		fmt.println(index, value)
+	}
+}
+</pre></div></div>
+    <p class="next"><a href="/for">&larr; for</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>

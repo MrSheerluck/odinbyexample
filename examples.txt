@@ -7,3 +7,4 @@ multiple-return-values
 if-else
 switch
 for
+range-loop
