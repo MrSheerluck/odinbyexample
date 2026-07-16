@@ -8,3 +8,4 @@ if-else
 switch
 for
 range-loop
+arrays

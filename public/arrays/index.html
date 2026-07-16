@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Arrays</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="arrays">
+    <h2><a href="/">Odin by Example</a>: Arrays</h2>
+    <div class="segment"><div class="docs"><p>Arrays are fixed-size collections of elements of the same type. The number of elements is part of the array's type and cannot be changed after it is declared.</p>
+<p>Array elements are accessed using zero-based indexing. The built-in len procedure returns the number of elements in an array.</p>
+<pre><span class="gp">$ odin run arrays.odin -file</span>
+<span class="go">empty: [0 0 0 0 0]</span>
+<span class="go">values: [1 2 3 4 5]</span>
+<span class="go">first: 1</span>
+<span class="go">last: 5</span>
+<span class="go">len: 5</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Declare an array of five integers.</span>
+	numbers: [<span class="m">5</span>]<span class="kt">int</span>
+	fmt.println(<span class="s">"empty:"</span>, numbers)
+
+<span class="c1">	// Assign values using their indices.</span>
+	numbers[<span class="m">0</span>] = <span class="m">1</span>
+	numbers[<span class="m">1</span>] = <span class="m">2</span>
+	numbers[<span class="m">2</span>] = <span class="m">3</span>
+	numbers[<span class="m">3</span>] = <span class="m">4</span>
+	numbers[<span class="m">4</span>] = <span class="m">5</span>
+
+	fmt.println(<span class="s">"values:"</span>, numbers)
+
+<span class="c1">	// Access individual elements.</span>
+	fmt.println(<span class="s">"first:"</span>, numbers[<span class="m">0</span>])
+	fmt.println(<span class="s">"last:"</span>, numbers[<span class="m">4</span>])
+
+<span class="c1">	// len returns the number of elements.</span>
+	fmt.println(<span class="s">"len:"</span>, <span class="nb">len</span>(numbers))
+}
+</pre></div></div>
+    <p class="next"><a href="/range-loop">&larr; range-loop</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
