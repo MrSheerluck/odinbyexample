@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Dynamic arrays</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="dynamic-arrays">
+    <h2><a href="/">Odin by Example</a>: Dynamic arrays</h2>
+    <div class="segment"><div class="docs"><p>Dynamic arrays are resizable collections. Unlike arrays, they can grow and shrink as elements are added or removed.</p>
+<p>The built-in append procedure adds one or more elements to the end of a dynamic array.</p>
+<p>The built-in len procedure returns the number of elements, while cap returns the current capacity.</p>
+<pre><span class="gp">$ odin run dynamic_arrays.odin -file</span>
+<span class="go">[]</span>
+<span class="go">[10 20 30]</span>
+<span class="go">len: 3</span>
+<span class="go">cap: 8</span>
+<span class="go">[10 20]</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Declare an empty dynamic array.</span>
+	numbers: [dynamic]<span class="kt">int</span>
+
+	fmt.println(numbers)
+
+<span class="c1">	// Append elements.</span>
+	append(&amp;numbers, <span class="m">10</span>)
+	append(&amp;numbers, <span class="m">20</span>, <span class="m">30</span>)
+
+	fmt.println(numbers)
+
+<span class="c1">	// len returns the number of elements.</span>
+	fmt.println(<span class="s">"len:"</span>, <span class="nb">len</span>(numbers))
+
+<span class="c1">	// cap returns the current capacity.</span>
+	fmt.println(<span class="s">"cap:"</span>, <span class="nb">cap</span>(numbers))
+
+<span class="c1">	// Remove the last element.</span>
+	pop(&amp;numbers)
+
+	fmt.println(numbers)
+}
+</pre></div></div>
+    <p class="next"><a href="/slice">&larr; slice</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
