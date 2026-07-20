@@ -9,3 +9,4 @@ switch
 for
 range-loop
 arrays
+slice

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Slice</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="slice">
+    <h2><a href="/">Odin by Example</a>: Slice</h2>
+    <div class="segment"><div class="docs"><p>Slices provide a view into an array. Unlike arrays, slices do not own their data and their size is not part of their type.</p>
+<p>A slice is created by slicing an array or by using a slice literal. Multiple slices can refer to the same underlying array.</p>
+<p>The built-in len procedure returns the number of elements in a slice.</p>
+<pre><span class="gp">$ odin run slices.odin -file</span>
+<span class="go">[2 3 4]</span>
+<span class="go">first: 2</span>
+<span class="go">len: 3</span>
+<span class="go">[1 20 3 4 5]</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Create an array.</span>
+	numbers := [<span class="m">5</span>]<span class="kt">int</span>{<span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span>, <span class="m">4</span>, <span class="m">5</span>}
+
+<span class="c1">	// Create a slice that refers to part of the array.</span>
+	s := numbers[<span class="m">1</span>:<span class="m">4</span>]
+
+	fmt.println(s)
+
+<span class="c1">	// Access elements by index.</span>
+	fmt.println(<span class="s">"first:"</span>, s[<span class="m">0</span>])
+
+<span class="c1">	// len returns the number of elements.</span>
+	fmt.println(<span class="s">"len:"</span>, <span class="nb">len</span>(s))
+
+<span class="c1">	// Modifying a slice also modifies the</span>
+<span class="c1">	// underlying array.</span>
+	s[<span class="m">1</span>] = <span class="m">20</span>
+
+	fmt.println(numbers)
+}
+</pre></div></div>
+    <p class="next"><a href="/arrays">&larr; arrays</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
