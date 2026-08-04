@@ -11,3 +11,4 @@ range-loop
 arrays
 slice
 dynamic-arrays
+maps

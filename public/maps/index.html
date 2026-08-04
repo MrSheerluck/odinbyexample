@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Maps</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="maps">
+    <h2><a href="/">Odin by Example</a>: Maps</h2>
+    <div class="segment"><div class="docs"><p>Maps store key-value pairs. Keys must be of a comparable type, such as strings or integers.</p>
+<p>The zero value of a map is nil. Use make to create a map before adding entries.</p>
+<p>Accessing a missing key returns the zero value of the element type. Use the comma-ok idiom or the "in" operator to check whether a key exists.</p>
+<p>The built-in delete_key procedure removes a key. The built-in len procedure returns the number of key-value pairs.</p>
+<pre><span class="gp">$ odin run maps.odin -file</span>
+<span class="go">alice: 95</span>
+<span class="go">bob: 87</span>
+<span class="go">zero value: 0</span>
+<span class="go">charlie present: false</span>
+<span class="go">alice is in the map</span>
+<span class="go">len: 2</span>
+<span class="go">len: 1</span>
+<span class="go">len: 2</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Create a map with string keys and int values.</span>
+	scores := make(<span class="k">map</span>[<span class="kt">string</span>]<span class="kt">int</span>)
+
+<span class="c1">	// Add entries.</span>
+	scores[<span class="s">"alice"</span>] = <span class="m">95</span>
+	scores[<span class="s">"bob"</span>] = <span class="m">87</span>
+
+	fmt.println(<span class="s">"alice:"</span>, scores[<span class="s">"alice"</span>])
+	fmt.println(<span class="s">"bob:"</span>, scores[<span class="s">"bob"</span>])
+
+<span class="c1">	// Accessing a missing key returns the zero value.</span>
+	fmt.println(<span class="s">"zero value:"</span>, scores[<span class="s">"charlie"</span>])
+
+<span class="c1">	// Comma-ok idiom: ok is true if the key exists.</span>
+	_, ok := scores[<span class="s">"charlie"</span>]
+	fmt.println(<span class="s">"charlie present:"</span>, ok)
+
+<span class="c1">	// The "in" operator also checks for key existence.</span>
+	<span class="k">if</span> <span class="s">"alice"</span> <span class="k">in</span> scores {
+		fmt.println(<span class="s">"alice is <span class="k">in</span> the map"</span>)
+	}
+
+	fmt.println(<span class="s">"len:"</span>, <span class="nb">len</span>(scores))
+
+<span class="c1">	// Remove a key.</span>
+	delete_key(&amp;scores, <span class="s">"bob"</span>)
+	fmt.println(<span class="s">"len:"</span>, <span class="nb">len</span>(scores))
+
+	scores[<span class="s">"charlie"</span>] = <span class="m">92</span>
+	fmt.println(<span class="s">"len:"</span>, <span class="nb">len</span>(scores))
+
+<span class="c1">	// Iterate over keys and values. Order is not</span>
+<span class="c1">	// specified.</span>
+	<span class="k">for</span> key, value <span class="k">in</span> scores {
+		fmt.println(key, value)
+	}
+}</pre></div></div>
+    <p class="next"><a href="/dynamic-arrays">&larr; dynamic-arrays</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
