@@ -12,3 +12,4 @@ arrays
 slice
 dynamic-arrays
 maps
+strings
