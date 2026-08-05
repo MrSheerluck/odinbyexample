@@ -9,7 +9,7 @@
 <body>
   <div class="example" id="strings">
     <h2><a href="/">Odin by Example</a>: Strings</h2>
-    <div class="segment"><div class="docs"><p>Strings hold UTF-8 encoded text. A string stores a pointer to data and a byte length — it does not own the underlying memory.</p>
+    <div class="segment"><div class="docs"><p>Strings hold UTF-8 encoded text. A string stores a pointer to data and a byte length, it does not own the underlying memory.</p>
 <p>The built-in len procedure returns the number of bytes in a string, not the number of characters.</p>
 <p>Indexing a string yields a byte (u8), not a rune. Use a for loop to iterate over runes, or index manually to access individual bytes.</p>
 <p>Constant strings can be concatenated with + at compile time. Use strings.concatenate for runtime concatenation. Strings can be compared with == and !=.</p>

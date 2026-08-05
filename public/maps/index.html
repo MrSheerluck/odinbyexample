@@ -9,10 +9,10 @@
 <body>
   <div class="example" id="maps">
     <h2><a href="/">Odin by Example</a>: Maps</h2>
-    <div class="segment"><div class="docs"><p>Maps store key-value pairs. Keys must be of a comparable type, such as strings or integers.</p>
+    <div class="segment"><div class="docs"><p>Maps store key:value pairs. Keys must be of a comparable type, such as strings or integers.</p>
 <p>The zero value of a map is nil. Use make to create a map before adding entries.</p>
 <p>Accessing a missing key returns the zero value of the element type. Use the comma-ok idiom or the "in" operator to check whether a key exists.</p>
-<p>The built-in delete_key procedure removes a key. The built-in len procedure returns the number of key-value pairs.</p>
+<p>The built-in delete_key procedure removes a key. The built-in len procedure returns the number of key:value pairs.</p>
 <pre><span class="gp">$ odin run maps.odin -file</span>
 <span class="go">alice: 95</span>
 <span class="go">bob: 87</span>

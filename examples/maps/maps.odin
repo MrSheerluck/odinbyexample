@@ -1,4 +1,4 @@
-// Maps store key-value pairs. Keys must be of a
+// Maps store key:value pairs. Keys must be of a
 // comparable type, such as strings or integers.
 //
 // The zero value of a map is nil. Use make to
@@ -10,7 +10,7 @@
 //
 // The built-in delete_key procedure removes a key.
 // The built-in len procedure returns the number of
-// key-value pairs.
+// key:value pairs.
 //
 //   $ odin run maps.odin -file
 //   alice: 95

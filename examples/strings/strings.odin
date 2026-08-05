@@ -1,5 +1,5 @@
 // Strings hold UTF-8 encoded text. A string stores
-// a pointer to data and a byte length — it does not
+// a pointer to data and a byte length, it does not
 // own the underlying memory.
 //
 // The built-in len procedure returns the number of
