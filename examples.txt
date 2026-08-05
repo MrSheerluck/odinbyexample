@@ -13,3 +13,4 @@ slice
 dynamic-arrays
 maps
 strings
+runes
