@@ -24,7 +24,7 @@ main :: proc() {
 	}
 
 	// Iterate over both the index and value.
-	for index, value in numbers {
+	for value, index in numbers {
 		fmt.println(index, value)
 	}
 }
