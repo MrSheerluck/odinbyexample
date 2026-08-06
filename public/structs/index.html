@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Structs</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="structs">
+    <h2><a href="/">Odin by Example</a>: Structs</h2>
+    <div class="segment"><div class="docs"><p>Structs group named fields into a single type. Define a struct with the struct keyword and access fields with dot notation.</p>
+<p>Struct literals create values. Supply all fields positionally, use named fields for partial init, or use an empty literal for the zero value.</p>
+<p>Fields can be accessed through a pointer without explicit dereferencing: p.x works when p is ^T.</p>
+<pre><span class="gp">$ odin run structs.odin -file</span>
+<span class="go">Alice is 30 years old</span>
+<span class="go">Bob is 0 years old</span>
+<span class="go">name: Alice age: 31</span>
+<span class="go">point: 3, 4</span>
+<span class="go">zero name: true zero age: true</span>
+<span class="go">age after pointer: 32</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+Person :: <span class="k">struct</span> {
+	name: <span class="kt">string</span>,
+	age:  <span class="kt">int</span>,
+}
+
+Point :: <span class="k">struct</span> {
+	x, y: <span class="kt">int</span>,
+}
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Struct literal with named fields.</span>
+	alice := Person{name = <span class="s">"Alice"</span>, age = <span class="m">30</span>}
+	fmt.printf(<span class="s">"%s is %d years old\n"</span>, alice.name, alice.age)
+
+<span class="c1">	// Named fields can be partial; others are zero.</span>
+	bob := Person{name = <span class="s">"Bob"</span>}
+	fmt.printf(<span class="s">"%s is %d years old\n"</span>, bob.name, bob.age)
+
+<span class="c1">	// Modify fields after creation.</span>
+	alice.age = <span class="m">31</span>
+	fmt.println(<span class="s">"name:"</span>, alice.name, <span class="s">"age:"</span>, alice.age)
+
+<span class="c1">	// Positional literal when all fields are given.</span>
+	p := Point{<span class="m">3</span>, <span class="m">4</span>}
+	fmt.printf(<span class="s">"point: %d, %d\n"</span>, p.x, p.y)
+
+<span class="c1">	// Zero value: empty string and zero int.</span>
+	empty := Person{}
+	fmt.println(<span class="s">"zero name:"</span>, empty.name == <span class="s">""</span>, <span class="s">"zero age:"</span>, empty.age == <span class="m">0</span>)
+
+<span class="c1">	// Access fields through a pointer.</span>
+	ptr := &amp;alice
+	ptr.age = <span class="m">32</span>
+	fmt.println(<span class="s">"age after pointer:"</span>, alice.age)
+}</pre></div></div>
+    <p class="next"><a href="/runes">&larr; runes</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
