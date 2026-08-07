@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Enums</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="enums">
+    <h2><a href="/">Odin by Example</a>: Enums</h2>
+    <div class="segment"><div class="docs"><p>Enums give names to a fixed set of values. They are a good alternative to a group of related constants and are often used with switch statements.</p>
+<p>Declare an enum with the enum keyword. The default underlying type is int, and values count up from zero unless you assign them explicitly.</p>
+<p>Refer to members with dot notation: Day.Monday. Inside a switch the enum type is inferred, so you can write just .Monday.</p>
+<pre><span class="gp">$ odin run enums.odin -file</span>
+<span class="go">first: Monday second: Tuesday</span>
+<span class="go">custom: Custom next: Next</span>
+<span class="go">underlying size: 1</span>
+<span class="go">Monday is 1</span>
+<span class="go">meeting on: Friday</span>
+<span class="go">day is Weekend: true</span>
+<span class="go">weekend day</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+<span class="c1">// Values are 0, 1, 2 automatically.</span>
+Day :: <span class="k">enum</span> {
+	Monday,
+	Tuesday,
+	Wednesday,
+	Thursday,
+	Friday,
+	Saturday,
+	Sunday,
+}
+
+<span class="c1">// The underlying type may be changed to save space or set</span>
+<span class="c1">// the storage width.</span>
+Byte :: <span class="k">enum</span> u<span class="m">8</span> {
+	A,
+	B,
+	C,
+}
+
+<span class="c1">// Explicit values; the next member follows automatically.</span>
+Status :: <span class="k">enum</span> {
+	Custom = <span class="m">10</span>,
+	Next,
+}
+
+<span class="c1">// The enum shorthand when you do not need named members.</span>
+<span class="c1">// Can be useful with #partial switch.</span>
+Directions :: <span class="k">enum</span> {
+	North,
+	East,
+	South,
+	West,
+}
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Members are typed values you can print and compare.</span>
+	d := Day.Monday
+	fmt.println(<span class="s">"first:"</span>, Day.Monday, <span class="s">"second:"</span>, Day.Tuesday)
+
+<span class="c1">	// Explicitly assigned values continue upward.</span>
+	fmt.println(<span class="s">"custom:"</span>, Status.Custom, <span class="s">"next:"</span>, Status.Next)
+
+<span class="c1">	// The underlying type controls the enum's size.</span>
+	fmt.println(<span class="s">"underlying size:"</span>, <span class="nb">size_of</span>(Byte))
+
+<span class="c1">	// Enums work with switch; the case names drop the type.</span>
+<span class="c1">	// A plain switch must cover every member, so use</span>
+<span class="c1">	// #partial switch when you want only a few cases plus</span>
+<span class="c1">	// a default.</span>
+	#partial <span class="k">switch</span> d {
+	<span class="k">case</span> .Monday:
+		fmt.println(<span class="s">"Monday is <span class="m">1</span>"</span>)
+	<span class="k">case</span> .Thursday:
+		fmt.println(<span class="s">".Thursday"</span>)
+	<span class="k">case</span>:
+		fmt.println(<span class="s">"some other day"</span>)
+	}
+
+<span class="c1">	// Convert an enum to its underlying value, and back.</span>
+	day_value := <span class="kt">int</span>(Day.Friday)
+	fmt.println(<span class="s">"meeting on:"</span>, Day(day_value))
+
+<span class="c1">	// A switch over a value converted from a constant.</span>
+	is_weekend :: <span class="k">proc</span>(day: Day) -&gt; <span class="kt">bool</span> {
+		#partial <span class="k">switch</span> day {
+		<span class="k">case</span> .Saturday, .Sunday:
+			<span class="k">return</span> <span class="kc">true</span>
+		<span class="k">case</span>:
+			<span class="k">return</span> <span class="kc">false</span>
+		}
+	}
+
+	fmt.println(<span class="s">"day is Weekend:"</span>, is_weekend(Day.Saturday))
+
+<span class="c1">	// Values are comparable and ordered like the underlying</span>
+<span class="c1">	// type, so comparisons and iteration work naturally.</span>
+	<span class="k">if</span> Day.Saturday &gt; Day.Friday {
+		fmt.println(<span class="s">"weekend day"</span>)
+	}
+}
+</pre></div></div>
+    <p class="next"><a href="/structs">&larr; structs</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
