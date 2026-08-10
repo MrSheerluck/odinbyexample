@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Bit fields</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="bit-fields">
+    <h2><a href="/">Odin by Example</a>: Bit fields</h2>
+    <div class="segment"><div class="docs"><p>Bit fields pack many small values into one integer-sized record. Think of them as a bit-packed struct.</p>
+<p>Declare one with the bit_field keyword followed by the backing type: an integer or a fixed-length array of integers. Each field gives a type, then `|` and the number of bits it occupies. Field names and bit widths must add up to fit inside the backing type.</p>
+<p>Fields are read and written with dot notation, just like a struct. Writing truncates the value to the field's bit width. Reading a signed field sign-extends it back to its declared type.</p>
+<pre><span class="gp">$ odin run bit-fields.odin -file</span>
+<span class="go">flags size: 2</span>
+<span class="go">active: true mode: 2 count: -3</span>
+<span class="go">count after: 3</span>
+<span class="go">header size: 4</span>
+<span class="go">version: 9 kind: Green seq: 7</span>
+<span class="go">seq max: 15</span></pre>
+<p>Odin's bit_field layout is well-defined (least-significant bit first), unlike C's bit fields which are not portable across compilers and targets.</p></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+<span class="c1">// 1 + 2 + 3 + 10 = 16 bits, the size of the u16 backing type.</span>
+Flags :: bit_field u<span class="m">16</span> {
+	active:  <span class="kt">bool</span> | <span class="m">1</span>,
+	mode:    u<span class="m">16</span>  | <span class="m">2</span>,
+	count:   i<span class="m">32</span>  | <span class="m">3</span>,
+	padding: u<span class="m">16</span>  | <span class="m">10</span>,
+}
+
+<span class="c1">// An enum can be stored in a bit field to save space.</span>
+Color :: <span class="k">enum</span> u<span class="m">8</span> {Red, Green, Blue}
+
+<span class="c1">// 4 + 2 + 4 + 22 = 32 bits, filling the u32 exactly.</span>
+Header :: bit_field u<span class="m">32</span> {
+	version: u<span class="m">16</span>   | <span class="m">4</span>,
+	kind:    Color | <span class="m">2</span>,
+	seq:     u<span class="m">8</span>    | <span class="m">4</span>,
+	rest:    u<span class="m">32</span>   | <span class="m">22</span>,
+}
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Fields default to their zero value.</span>
+	f := Flags{}
+	fmt.println(<span class="s">"flags size:"</span>, <span class="nb">size_of</span>(Flags))
+
+<span class="c1">	// Write and read fields with dot notation.</span>
+	f.active = <span class="kc">true</span>
+	f.mode = <span class="m">2</span>
+	f.count = -<span class="m">3</span>
+	fmt.println(<span class="s">"active:"</span>, f.active, <span class="s">"mode:"</span>, f.mode, <span class="s">"count:"</span>, f.count)
+
+<span class="c1">	// The count field is only 3 bits wide. Its signed range is</span>
+<span class="c1">	// -4..3, so a value that does not fit is truncated.</span>
+	f.count = <span class="m">3</span>
+	fmt.println(<span class="s">"count after:"</span>, f.count)
+
+<span class="c1">	// Enum and integer fields can share a record.</span>
+	h := Header{}
+	h.version = <span class="m">9</span>
+	h.kind = .Green
+	h.seq = <span class="m">7</span>
+	fmt.println(<span class="s">"header size:"</span>, <span class="nb">size_of</span>(Header))
+	fmt.println(<span class="s">"version:"</span>, h.version, <span class="s">"kind:"</span>, h.kind, <span class="s">"seq:"</span>, h.seq)
+
+<span class="c1">	// A 4-bit field holds values from 0 to 15.</span>
+	h.seq = <span class="m">15</span>
+	fmt.println(<span class="s">"seq <span class="nb">max</span>:"</span>, h.seq)
+}
+</pre></div></div>
+    <p class="next"><a href="/enums">&larr; enums</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
