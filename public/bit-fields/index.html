@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Odin by Example: Bit fields</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bit fields - Odin by Example</title>
+  <meta name="description" content="Bit fields pack many small values into one integer-sized record. Think of them as a bit-packed struct. Declare one with the bit_field keyword followed by...">
+  <link rel="canonical" href="https://odinbyexample.com/bit-fields/">
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Odin by Example">
+  <meta property="og:title" content="Bit fields - Odin by Example">
+  <meta property="og:description" content="Bit fields pack many small values into one integer-sized record. Think of them as a bit-packed struct. Declare one with the bit_field keyword followed by...">
+  <meta property="og:url" content="https://odinbyexample.com/bit-fields/">
+  <meta property="og:image" content="https://odinbyexample.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Bit fields - Odin by Example",
+    "description": "Bit fields pack many small values into one integer-sized record. Think of them as a bit-packed struct. Declare one with the bit_field keyword followed by...",
+    "url": "https://odinbyexample.com/bit-fields/",
+    "author": {"@type": "Person", "name": "mrsheerluck", "url": "https://github.com/mrsheerluck"},
+    "publisher": {"@type": "Organization", "name": "Odin by Example", "logo": {"@type": "ImageObject", "url": "https://odinbyexample.com/logo.svg"}},
+    "inLanguage": "en"
+  }
+  </script>
 </head>
 <body>
   <div class="example" id="bit-fields">
-    <h2><a href="/">Odin by Example</a>: Bit fields</h2>
+    <h1><a href="/">Odin by Example</a>: Bit fields</h1>
     <div class="segment"><div class="docs"><p>Bit fields pack many small values into one integer-sized record. Think of them as a bit-packed struct.</p>
 <p>Declare one with the bit_field keyword followed by the backing type: an integer or a fixed-length array of integers. Each field gives a type, then `|` and the number of bits it occupies. Field names and bit widths must add up to fit inside the backing type.</p>
 <p>Fields are read and written with dot notation, just like a struct. Writing truncates the value to the field's bit width. Reading a signed field sign-extends it back to its declared type.</p>
@@ -71,7 +93,7 @@ main :: <span class="k">proc</span>() {
 	fmt.println(<span class="s">"seq <span class="nb">max</span>:"</span>, h.seq)
 }
 </pre></div></div>
-    <p class="next"><a href="/enums">&larr; enums</a> | <a href="/bit-sets">bit-sets &rarr;</a></p>
+    <p class="next"><a href="/enums/">&larr; enums</a> | <a href="/bit-sets/">bit-sets &rarr;</a></p>
     <div class="footer">
   <p>
     by <a href="https://github.com/mrsheerluck">mrsheerluck</a>

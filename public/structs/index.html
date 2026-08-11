@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Odin by Example: Structs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Structs - Odin by Example</title>
+  <meta name="description" content="Structs group named fields into a single type. Define a struct with the struct keyword and access fields with dot notation. Struct literals create values....">
+  <link rel="canonical" href="https://odinbyexample.com/structs/">
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Odin by Example">
+  <meta property="og:title" content="Structs - Odin by Example">
+  <meta property="og:description" content="Structs group named fields into a single type. Define a struct with the struct keyword and access fields with dot notation. Struct literals create values....">
+  <meta property="og:url" content="https://odinbyexample.com/structs/">
+  <meta property="og:image" content="https://odinbyexample.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Structs - Odin by Example",
+    "description": "Structs group named fields into a single type. Define a struct with the struct keyword and access fields with dot notation. Struct literals create values....",
+    "url": "https://odinbyexample.com/structs/",
+    "author": {"@type": "Person", "name": "mrsheerluck", "url": "https://github.com/mrsheerluck"},
+    "publisher": {"@type": "Organization", "name": "Odin by Example", "logo": {"@type": "ImageObject", "url": "https://odinbyexample.com/logo.svg"}},
+    "inLanguage": "en"
+  }
+  </script>
 </head>
 <body>
   <div class="example" id="structs">
-    <h2><a href="/">Odin by Example</a>: Structs</h2>
+    <h1><a href="/">Odin by Example</a>: Structs</h1>
     <div class="segment"><div class="docs"><p>Structs group named fields into a single type. Define a struct with the struct keyword and access fields with dot notation.</p>
 <p>Struct literals create values. Supply all fields positionally, use named fields for partial init, or use an empty literal for the zero value.</p>
 <p>Fields can be accessed through a pointer without explicit dereferencing: p.x works when p is ^T.</p>
@@ -57,7 +79,7 @@ main :: <span class="k">proc</span>() {
 	ptr.age = <span class="m">32</span>
 	fmt.println(<span class="s">"age after pointer:"</span>, alice.age)
 }</pre></div></div>
-    <p class="next"><a href="/runes">&larr; runes</a> | <a href="/enums">enums &rarr;</a></p>
+    <p class="next"><a href="/runes/">&larr; runes</a> | <a href="/enums/">enums &rarr;</a></p>
     <div class="footer">
   <p>
     by <a href="https://github.com/mrsheerluck">mrsheerluck</a>

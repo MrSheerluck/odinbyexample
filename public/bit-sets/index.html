@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Odin by Example: Bit sets</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bit sets - Odin by Example</title>
+  <meta name="description" content="Bit sets model the mathematical notion of a set as a packed bit vector, giving compact storage and fast operations. The element type is an enum or a...">
+  <link rel="canonical" href="https://odinbyexample.com/bit-sets/">
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Odin by Example">
+  <meta property="og:title" content="Bit sets - Odin by Example">
+  <meta property="og:description" content="Bit sets model the mathematical notion of a set as a packed bit vector, giving compact storage and fast operations. The element type is an enum or a...">
+  <meta property="og:url" content="https://odinbyexample.com/bit-sets/">
+  <meta property="og:image" content="https://odinbyexample.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Bit sets - Odin by Example",
+    "description": "Bit sets model the mathematical notion of a set as a packed bit vector, giving compact storage and fast operations. The element type is an enum or a...",
+    "url": "https://odinbyexample.com/bit-sets/",
+    "author": {"@type": "Person", "name": "mrsheerluck", "url": "https://github.com/mrsheerluck"},
+    "publisher": {"@type": "Organization", "name": "Odin by Example", "logo": {"@type": "ImageObject", "url": "https://odinbyexample.com/logo.svg"}},
+    "inLanguage": "en"
+  }
+  </script>
 </head>
 <body>
   <div class="example" id="bit-sets">
-    <h2><a href="/">Odin by Example</a>: Bit sets</h2>
+    <h1><a href="/">Odin by Example</a>: Bit sets</h1>
     <div class="segment"><div class="docs"><p>Bit sets model the mathematical notion of a set as a packed bit vector, giving compact storage and fast operations. The element type is an enum or a range, and every element maps to one bit.</p>
 <p>Declare a bit set with bit_set[...]. Create values with set literals like {.North, .West} or {'A', 'Z'}. The zero value is an empty set {}.</p>
 <p>Set operations use the usual operators: | union, & intersection, - difference, ~ symmetric difference, and <=/>= for subset/superset checks. Membership is tested with `in` and `not_in`, and card() counts elements.</p>
@@ -94,7 +116,7 @@ main :: <span class="k">proc</span>() {
 	fmt.println(<span class="s">"permissions after edits:"</span>, permissions)
 }
 </pre></div></div>
-    <p class="next"><a href="/bit-fields">&larr; bit-fields</a></p>
+    <p class="next"><a href="/bit-fields/">&larr; bit-fields</a></p>
     <div class="footer">
   <p>
     by <a href="https://github.com/mrsheerluck">mrsheerluck</a>

@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Odin by Example: Strings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Strings - Odin by Example</title>
+  <meta name="description" content="Strings hold UTF-8 encoded text. A string stores a pointer to data and a byte length, it does not own the underlying memory. The built-in len procedure...">
+  <link rel="canonical" href="https://odinbyexample.com/strings/">
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Odin by Example">
+  <meta property="og:title" content="Strings - Odin by Example">
+  <meta property="og:description" content="Strings hold UTF-8 encoded text. A string stores a pointer to data and a byte length, it does not own the underlying memory. The built-in len procedure...">
+  <meta property="og:url" content="https://odinbyexample.com/strings/">
+  <meta property="og:image" content="https://odinbyexample.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Strings - Odin by Example",
+    "description": "Strings hold UTF-8 encoded text. A string stores a pointer to data and a byte length, it does not own the underlying memory. The built-in len procedure...",
+    "url": "https://odinbyexample.com/strings/",
+    "author": {"@type": "Person", "name": "mrsheerluck", "url": "https://github.com/mrsheerluck"},
+    "publisher": {"@type": "Organization", "name": "Odin by Example", "logo": {"@type": "ImageObject", "url": "https://odinbyexample.com/logo.svg"}},
+    "inLanguage": "en"
+  }
+  </script>
 </head>
 <body>
   <div class="example" id="strings">
-    <h2><a href="/">Odin by Example</a>: Strings</h2>
+    <h1><a href="/">Odin by Example</a>: Strings</h1>
     <div class="segment"><div class="docs"><p>Strings hold UTF-8 encoded text. A string stores a pointer to data and a byte length, it does not own the underlying memory.</p>
 <p>The built-in len procedure returns the number of bytes in a string, not the number of characters.</p>
 <p>Indexing a string yields a byte (u8), not a rune. Use a for loop to iterate over runes, or index manually to access individual bytes.</p>
@@ -75,7 +97,7 @@ main :: <span class="k">proc</span>() {
 		fmt.println(i, word[i])
 	}
 }</pre></div></div>
-    <p class="next"><a href="/maps">&larr; maps</a> | <a href="/runes">runes &rarr;</a></p>
+    <p class="next"><a href="/maps/">&larr; maps</a> | <a href="/runes/">runes &rarr;</a></p>
     <div class="footer">
   <p>
     by <a href="https://github.com/mrsheerluck">mrsheerluck</a>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://odinbyexample.com/</loc></url>
+  <url><loc>https://odinbyexample.com/hello-world/</loc></url>
+  <url><loc>https://odinbyexample.com/values/</loc></url>
+  <url><loc>https://odinbyexample.com/variables/</loc></url>
+  <url><loc>https://odinbyexample.com/constants/</loc></url>
+  <url><loc>https://odinbyexample.com/procedures/</loc></url>
+  <url><loc>https://odinbyexample.com/multiple-return-values/</loc></url>
+  <url><loc>https://odinbyexample.com/if-else/</loc></url>
+  <url><loc>https://odinbyexample.com/switch/</loc></url>
+  <url><loc>https://odinbyexample.com/for/</loc></url>
+  <url><loc>https://odinbyexample.com/range-loop/</loc></url>
+  <url><loc>https://odinbyexample.com/arrays/</loc></url>
+  <url><loc>https://odinbyexample.com/slice/</loc></url>
+  <url><loc>https://odinbyexample.com/dynamic-arrays/</loc></url>
+  <url><loc>https://odinbyexample.com/maps/</loc></url>
+  <url><loc>https://odinbyexample.com/strings/</loc></url>
+  <url><loc>https://odinbyexample.com/runes/</loc></url>
+  <url><loc>https://odinbyexample.com/structs/</loc></url>
+  <url><loc>https://odinbyexample.com/enums/</loc></url>
+  <url><loc>https://odinbyexample.com/bit-fields/</loc></url>
+  <url><loc>https://odinbyexample.com/bit-sets/</loc></url>
+</urlset>

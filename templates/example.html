@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Odin by Example: {{Title}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{Title}} - Odin by Example</title>
+  <meta name="description" content="{{Description}}">
+  <link rel="canonical" href="{{Canonical}}">
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Odin by Example">
+  <meta property="og:title" content="{{Title}} - Odin by Example">
+  <meta property="og:description" content="{{Description}}">
+  <meta property="og:url" content="{{Canonical}}">
+  <meta property="og:image" content="https://odinbyexample.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "{{Title}} - Odin by Example",
+    "description": "{{DescriptionJSON}}",
+    "url": "{{Canonical}}",
+    "author": {"@type": "Person", "name": "mrsheerluck", "url": "https://github.com/mrsheerluck"},
+    "publisher": {"@type": "Organization", "name": "Odin by Example", "logo": {"@type": "ImageObject", "url": "https://odinbyexample.com/logo.svg"}},
+    "inLanguage": "en"
+  }
+  </script>
 </head>
 <body>
   <div class="example" id="{{ID}}">
-    <h2><a href="/">Odin by Example</a>: {{Title}}</h2>
+    <h1><a href="/">Odin by Example</a>: {{Title}}</h1>
     {{Segments}}
     {{PrevNext}}
     {{Footer}}

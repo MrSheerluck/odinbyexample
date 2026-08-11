@@ -9,6 +9,14 @@ Segment :: struct {
 	code: string,
 }
 
+SITE_URL :: "https://odinbyexample.com"
+
+robots_txt: string : `User-agent: *
+Allow: /
+
+Sitemap: https://odinbyexample.com/sitemap.xml
+`
+
 main :: proc() {
 	examples := read_examples()
 	fmt.println("Building", len(examples), "examples...")
@@ -28,7 +36,7 @@ main :: proc() {
 	defer delete(links)
 
 	for ex, i in examples {
-		title, segments, ok := parse_example(ex)
+		title, description, segments, ok := parse_example(ex)
 		if !ok {
 			continue
 		}
@@ -38,9 +46,13 @@ main :: proc() {
 
 		segments_html := render_segments(segments[:])
 		prev_next := render_prev_next(examples[:], i)
+		canonical := fmt.tprintf("%s/%s/", SITE_URL, ex)
 
 		page := ex_tmpl
 		page, _ = strings.replace_all(page, "{{Title}}", title)
+		page, _ = strings.replace_all(page, "{{Description}}", escape_attr(description))
+		page, _ = strings.replace_all(page, "{{DescriptionJSON}}", escape_json(description))
+		page, _ = strings.replace_all(page, "{{Canonical}}", canonical)
 		page, _ = strings.replace_all(page, "{{ID}}", ex)
 		page, _ = strings.replace_all(page, "{{Segments}}", segments_html)
 		page, _ = strings.replace_all(page, "{{PrevNext}}", prev_next)
@@ -51,7 +63,7 @@ main :: proc() {
 			fmt.eprintln("ERROR: could not write", out_path)
 		}
 
-		link := fmt.tprintf("<li><a href=\"/%s\">%s</a></li>", ex, title)
+		link := fmt.tprintf("<li><a href=\"/%s/\">%s</a></li>", ex, title)
 		append(&links, strings.clone(link))
 
 		fmt.println("  built:", ex)
@@ -60,6 +72,7 @@ main :: proc() {
 	// Index page
 	idx := index_t
 	idx, _ = strings.replace_all(idx, "{{Examples}}", strings.join(links[:], "\n"))
+	idx, _ = strings.replace_all(idx, "{{ExamplesListJSON}}", build_itemlist_json(examples[:]))
 	idx, _ = strings.replace_all(idx, "{{Footer}}", footer)
 	if werr := os.write_entire_file("public/index.html", transmute([]byte)idx); werr != nil {
 		fmt.eprintln("ERROR: could not write public/index.html")
@@ -88,6 +101,21 @@ main :: proc() {
 	// Copy logo
 	if werr := os.write_entire_file("public/logo.svg", transmute([]byte)read_template("templates/logo.svg")); werr != nil {
 		fmt.eprintln("ERROR: could not write public/logo.svg")
+	}
+
+	// Copy Open Graph image
+	if werr := os.write_entire_file("public/og-image.png", transmute([]byte)read_template("templates/og-image.png")); werr != nil {
+		fmt.eprintln("ERROR: could not write public/og-image.png")
+	}
+
+	// Generate sitemap.xml
+	if werr := os.write_entire_file("public/sitemap.xml", transmute([]byte)build_sitemap(examples[:])); werr != nil {
+		fmt.eprintln("ERROR: could not write public/sitemap.xml")
+	}
+
+	// Generate robots.txt
+	if werr := os.write_entire_file("public/robots.txt", transmute([]byte)robots_txt); werr != nil {
+		fmt.eprintln("ERROR: could not write public/robots.txt")
 	}
 
 	// 404 page
@@ -131,14 +159,14 @@ read_template :: proc(path: string) -> string {
 	return strings.clone(string(data))
 }
 
-parse_example :: proc(dir: string) -> (title: string, segments: []Segment, ok: bool) {
+parse_example :: proc(dir: string) -> (title: string, description: string, segments: []Segment, ok: bool) {
 	path := strings.concatenate({"examples/", dir, "/", dir, ".odin"})
 	defer delete(path)
 
 	data, err := os.read_entire_file_from_path(path, context.allocator)
 	if err != nil {
 		fmt.eprintln("ERROR: could not read:", path)
-		return "", nil, false
+		return "", "", nil, false
 	}
 
 	text := string(data)
@@ -179,7 +207,37 @@ parse_example :: proc(dir: string) -> (title: string, segments: []Segment, ok: b
 	}
 
 	title = format_title(dir)
-	return title, segs[:], true
+	description = build_description(docs_lines[:])
+	return title, description, segs[:], true
+}
+
+build_description :: proc(docs_lines: []string) -> string {
+	parts := make([dynamic]string)
+
+	for line in docs_lines {
+		trimmed := strings.trim_space(line)
+		if trimmed == "" || strings.has_prefix(trimmed, "$ ") {
+			continue
+		}
+		append(&parts, strings.clone(trimmed))
+	}
+
+	text := strings.join(parts[:], " ")
+	if text == "" {
+		return ""
+	}
+
+	MAX_DESC :: 155
+	if len(text) <= MAX_DESC {
+		return text
+	}
+
+	cut := text[:MAX_DESC]
+	space_idx := strings.last_index_any(cut, " \t")
+	if space_idx > 40 {
+		return strings.concatenate({cut[:space_idx], "..."})
+	}
+	return strings.concatenate({cut, "..."})
 }
 
 render_docs :: proc(lines: []string) -> string {
@@ -372,15 +430,69 @@ render_prev_next :: proc(examples: []string, idx: int) -> string {
 
 	if idx > 0 {
 		prev := examples[idx-1]
-		append(&parts, fmt.tprintf("<a href=\"/%s\">&larr; %s</a>", prev, prev))
+		append(&parts, fmt.tprintf("<a href=\"/%s/\">&larr; %s</a>", prev, prev))
 	}
 
 	if idx < len(examples) - 1 {
 		next := examples[idx+1]
-		append(&parts, fmt.tprintf("<a href=\"/%s\">%s &rarr;</a>", next, next))
+		append(&parts, fmt.tprintf("<a href=\"/%s/\">%s &rarr;</a>", next, next))
 	}
 
 	return fmt.tprintf("<p class=\"next\">%s</p>", strings.join(parts[:], " | "))
+}
+
+escape_attr :: proc(s: string) -> string {
+	result := s
+	result, _ = strings.replace_all(result, "&", "&amp;")
+	result, _ = strings.replace_all(result, "<", "&lt;")
+	result, _ = strings.replace_all(result, ">", "&gt;")
+	result, _ = strings.replace_all(result, "\"", "&quot;")
+	return result
+}
+
+escape_json :: proc(s: string) -> string {
+	result := s
+	result, _ = strings.replace_all(result, "\\", "\\\\")
+	result, _ = strings.replace_all(result, "\"", "\\\"")
+	result, _ = strings.replace_all(result, "\n", "\\n")
+	result, _ = strings.replace_all(result, "\r", "\\r")
+	result, _ = strings.replace_all(result, "\t", "\\t")
+	return result
+}
+
+build_itemlist_json :: proc(examples: []string) -> string {
+	items := make([dynamic]string)
+
+	for ex, i in examples {
+		title := escape_json(format_title(ex))
+		url := fmt.tprintf("%s/%s/", SITE_URL, ex)
+
+		item := strings.concatenate({
+			"{\"@type\":\"ListItem\",\"position\":",
+			fmt.tprintf("%d", i + 1),
+			",\"name\":\"", title, "\",\"url\":\"", url, "\"}",
+		})
+		append(&items, strings.clone(item))
+	}
+
+	return strings.join(items[:], ",\n    ")
+}
+
+build_sitemap :: proc(examples: []string) -> string {
+	urls := make([dynamic]string)
+	append(&urls, fmt.tprintf("  <url><loc>%s/</loc></url>", SITE_URL))
+
+	for ex in examples {
+		append(&urls, fmt.tprintf("  <url><loc>%s/%s/</loc></url>", SITE_URL, ex))
+	}
+
+	return fmt.tprintf(
+		"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+		"<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n" +
+		"%s\n" +
+		"</urlset>\n",
+		strings.join(urls[:], "\n"),
+	)
 }
 
 highlight_strings :: proc(text: string) -> string {

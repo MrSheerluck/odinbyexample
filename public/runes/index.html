@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Odin by Example: Runes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Runes - Odin by Example</title>
+  <meta name="description" content="A rune represents a single Unicode code point. It is a signed 32-bit integer and a distinct type from i32. Character literals use single quotes and...">
+  <link rel="canonical" href="https://odinbyexample.com/runes/">
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Odin by Example">
+  <meta property="og:title" content="Runes - Odin by Example">
+  <meta property="og:description" content="A rune represents a single Unicode code point. It is a signed 32-bit integer and a distinct type from i32. Character literals use single quotes and...">
+  <meta property="og:url" content="https://odinbyexample.com/runes/">
+  <meta property="og:image" content="https://odinbyexample.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Runes - Odin by Example",
+    "description": "A rune represents a single Unicode code point. It is a signed 32-bit integer and a distinct type from i32. Character literals use single quotes and...",
+    "url": "https://odinbyexample.com/runes/",
+    "author": {"@type": "Person", "name": "mrsheerluck", "url": "https://github.com/mrsheerluck"},
+    "publisher": {"@type": "Organization", "name": "Odin by Example", "logo": {"@type": "ImageObject", "url": "https://odinbyexample.com/logo.svg"}},
+    "inLanguage": "en"
+  }
+  </script>
 </head>
 <body>
   <div class="example" id="runes">
-    <h2><a href="/">Odin by Example</a>: Runes</h2>
+    <h1><a href="/">Odin by Example</a>: Runes</h1>
     <div class="segment"><div class="docs"><p>A rune represents a single Unicode code point. It is a signed 32-bit integer and a distinct type from i32.</p>
 <p>Character literals use single quotes and produce untyped rune constants. They can be assigned to a rune variable or to an integer type that can hold the value.</p>
 <p>Strings store UTF-8 encoded bytes. When you iterate a string with for-in, Odin decodes UTF-8 into runes. Indexing a string still gives bytes (u8), as shown in the Strings example.</p>
@@ -79,7 +101,7 @@ main :: <span class="k">proc</span>() {
 	r<span class="m">2</span>, size := utf<span class="m">8.dec</span>ode_rune_in_string(word)
 	fmt.println(r<span class="m">2</span>, size) // <span class="sc">'c'</span>, <span class="m">1</span>
 }</pre></div></div>
-    <p class="next"><a href="/strings">&larr; strings</a> | <a href="/structs">structs &rarr;</a></p>
+    <p class="next"><a href="/strings/">&larr; strings</a> | <a href="/structs/">structs &rarr;</a></p>
     <div class="footer">
   <p>
     by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
