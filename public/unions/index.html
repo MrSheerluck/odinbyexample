@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unions - Odin by Example</title>
+  <meta name="description" content="A union is a type that can hold exactly one of a set of member types at a time. They are useful when a value may be one of several different things, such...">
+  <link rel="canonical" href="https://odinbyexample.com/unions/">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Odin by Example">
+  <meta property="og:title" content="Unions - Odin by Example">
+  <meta property="og:description" content="A union is a type that can hold exactly one of a set of member types at a time. They are useful when a value may be one of several different things, such...">
+  <meta property="og:url" content="https://odinbyexample.com/unions/">
+  <meta property="og:image" content="https://odinbyexample.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Unions - Odin by Example",
+    "description": "A union is a type that can hold exactly one of a set of member types at a time. They are useful when a value may be one of several different things, such...",
+    "url": "https://odinbyexample.com/unions/",
+    "author": {"@type": "Person", "name": "mrsheerluck", "url": "https://github.com/mrsheerluck"},
+    "publisher": {"@type": "Organization", "name": "Odin by Example", "logo": {"@type": "ImageObject", "url": "https://odinbyexample.com/logo.svg"}},
+    "inLanguage": "en"
+  }
+  </script>
+</head>
+<body>
+  <div class="example" id="unions">
+    <h1><a href="/">Odin by Example</a>: Unions</h1>
+    <div class="segment"><div class="docs"><p>A union is a type that can hold exactly one of a set of member types at a time. They are useful when a value may be one of several different things, such as a result that is either a number or an error message.</p>
+<p>Declare a union with the union keyword followed by the member types in {}. The default is a tagged union: a tag keeps track of which member is currently active.</p>
+<p>Create a union value by assigning one of its member types. Check which member is active with a type switch, and extract the stored value with a type assertion to the member type. Assigning a new value replaces whatever was stored before.</p>
+<pre><span class="gp">$ odin run unions.odin -file</span>
+<span class="go">first value: 10</span>
+<span class="go">as f64: 3.14</span>
+<span class="go">size of Number: 16</span>
+<span class="go">string value: hello</span>
+<span class="go">size of Value: 24</span>
+<span class="go">it's a string: hello</span>
+<span class="go">result: Result{value = 42, ok = true}</span>
+<span class="go">nil union</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+<span class="c1">// A union of a few basic types. The tag is stored implicitly</span>
+<span class="c1">// and is at least one byte, so the size is rounded up.</span>
+Number :: <span class="k">union</span> {
+	<span class="kt">int</span>,
+	f<span class="m">64</span>,
+}
+
+<span class="c1">// A union can also hold structs and other user types.</span>
+Value :: <span class="k">union</span> {
+	<span class="kt">int</span>,
+	<span class="kt">string</span>,
+	Result,
+}
+
+Result :: <span class="k">struct</span> {
+	value: <span class="kt">int</span>,
+	ok:    <span class="kt">bool</span>,
+}
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Assign a member type; the tag is set automatically.</span>
+	n: Number = <span class="m">10</span>
+	fmt.println(<span class="s">"first value:"</span>, n)
+
+<span class="c1">	// Reassign to a different member; the tag updates.</span>
+	n = <span class="m">3.14</span>
+	fmt.println(<span class="s">"as f<span class="m">64</span>:"</span>, n)
+
+<span class="c1">	// The size is the largest member plus the tag.</span>
+	fmt.println(<span class="s">"size of Number:"</span>, <span class="nb">size_of</span>(Number))
+
+<span class="c1">	// A union with a string member stores it the same way.</span>
+	v: Value = <span class="s">"hello"</span>
+	fmt.println(<span class="s">"string value:"</span>, v)
+	fmt.println(<span class="s">"size of Value:"</span>, <span class="nb">size_of</span>(Value))
+
+<span class="c1">	// A type switch distinguishes the active member.</span>
+	describe :: <span class="k">proc</span>(x: Value) {
+		<span class="k">switch</span> y <span class="k">in</span> x {
+		<span class="k">case</span> <span class="kt">int</span>:
+			fmt.println(<span class="s">"it's an <span class="kt">int</span>:"</span>, y)
+		<span class="k">case</span> <span class="kt">string</span>:
+			fmt.println(<span class="s">"it's a <span class="kt">string</span>:"</span>, y)
+		<span class="k">case</span> Result:
+			fmt.println(<span class="s">"it's a Result:"</span>, y)
+		}
+	}
+	describe(v)
+
+<span class="c1">	// A type assertion extracts the value if the tag matches.</span>
+	<span class="k">if</span> i, ok := v.(<span class="kt">int</span>); ok {
+		fmt.println(<span class="s">"as <span class="kt">int</span>:"</span>, i)
+	}
+
+<span class="c1">	// Assigning a struct member works like any other.</span>
+	r: Value = Result{<span class="m">42</span>, <span class="kc">true</span>}
+	fmt.println(<span class="s">"result:"</span>, r)
+
+<span class="c1">	// A union can hold nil; check before extracting.</span>
+	u: Number
+	<span class="k">if</span> u == <span class="kc">nil</span> {
+		fmt.println(<span class="s">"nil union"</span>)
+	}
+}
+</pre></div></div>
+    <p class="next"><a href="/bit-sets/">&larr; bit-sets</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>

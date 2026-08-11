@@ -18,3 +18,4 @@ structs
 enums
 bit-fields
 bit-sets
+unions
