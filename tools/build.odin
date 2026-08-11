@@ -275,7 +275,7 @@ highlight_line :: proc(line: string) -> string {
 	constants := [?]string{"nil", "true", "false"}
 
 	builtins := [?]string{
-		"len", "cap", "size_of", "align_of", "offset_of",
+		"len", "cap", "card", "size_of", "align_of", "offset_of",
 		"type_of", "typeid_of", "type_info_of",
 		"swizzle", "soa_zip", "soa_unzip",
 		"min", "max", "abs", "clamp",

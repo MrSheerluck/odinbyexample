@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Odin by Example: Bit sets</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+</head>
+<body>
+  <div class="example" id="bit-sets">
+    <h2><a href="/">Odin by Example</a>: Bit sets</h2>
+    <div class="segment"><div class="docs"><p>Bit sets model the mathematical notion of a set as a packed bit vector, giving compact storage and fast operations. The element type is an enum or a range, and every element maps to one bit.</p>
+<p>Declare a bit set with bit_set[...]. Create values with set literals like {.North, .West} or {'A', 'Z'}. The zero value is an empty set {}.</p>
+<p>Set operations use the usual operators: | union, & intersection, - difference, ~ symmetric difference, and <=/>= for subset/superset checks. Membership is tested with `in` and `not_in`, and card() counts elements.</p>
+<p>Bit sets are a cleaner way to express flags than integer constants that are bitwise-or-ed together.</p>
+<pre><span class="gp">$ odin run bit-sets.odin -file</span>
+<span class="go">a: bit_set[Direction]{North, West}</span>
+<span class="go">b: bit_set[Direction]{East, West}</span>
+<span class="go">union: bit_set[Direction]{North, East, West}</span>
+<span class="go">intersection: bit_set[Direction]{West}</span>
+<span class="go">difference: bit_set[Direction]{North}</span>
+<span class="go">symmetric difference: bit_set[Direction]{North, East}</span>
+<span class="go">North in a: true</span>
+<span class="go">East in a: false</span>
+<span class="go">cardinality of a: 2</span>
+<span class="go">a equals {West, North}: true</span>
+<span class="go">a subset of {N,W,S}: true</span>
+<span class="go">char set: bit_set['A'..='Z']{65, 67, 90}</span>
+<span class="go">'B' in cs: false</span>
+<span class="go">'Z' in cs: true</span>
+<span class="go">size of Char_Set: 4</span>
+<span class="go">size of Big_Set: 16</span>
+<span class="go">size of Small_Explicit: 1</span>
+<span class="go">permissions after edits: bit_set[Direction]{West}</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+<span class="c1">// Element type can be an enum...</span>
+Direction :: <span class="k">enum</span> {North, East, South, West}
+Direction_Set :: <span class="k">bit_set</span>[Direction]
+
+<span class="c1">// ...or a range, including a character range.</span>
+Char_Set :: <span class="k">bit_set</span>[<span class="sc">'A'</span>..=<span class="sc">'Z'</span>]
+Big_Set :: <span class="k">bit_set</span>[<span class="m">0.</span>.&lt;<span class="m">128</span>]
+
+<span class="c1">// The backing integer type can be chosen explicitly; it must</span>
+<span class="c1">// cover the range. A u8 holds at most 8 elements.</span>
+Small_Explicit :: <span class="k">bit_set</span>[<span class="m">0.</span>.&lt;<span class="m">8</span>; u<span class="m">8</span>]
+
+main :: <span class="k">proc</span>() {
+	a := Direction_Set{.North, .West}
+	b := Direction_Set{.East, .West}
+
+	fmt.println(<span class="s">"a:"</span>, a)
+	fmt.println(<span class="s">"b:"</span>, b)
+
+<span class="c1">	// Set operations combine two sets.</span>
+	fmt.println(<span class="s">"union:"</span>, a | b)
+	fmt.println(<span class="s">"intersection:"</span>, a &amp; b)
+	fmt.println(<span class="s">"difference:"</span>, a - b)
+	fmt.println(<span class="s">"symmetric difference:"</span>, a ~ b)
+
+<span class="c1">	// Membership tests use `in` and `not_in`.</span>
+	fmt.println(<span class="s">"North <span class="k">in</span> a:"</span>, .North <span class="k">in</span> a)
+	fmt.println(<span class="s">"East <span class="k">in</span> a:"</span>, .East <span class="k">in</span> a)
+
+<span class="c1">	// card() counts the elements present.</span>
+	fmt.println(<span class="s">"cardinality of a:"</span>, <span class="nb">card</span>(a))
+
+<span class="c1">	// Sets compare by contents, regardless of literal order,</span>
+<span class="c1">	// and subset/superset checks use the ordering operators.</span>
+	fmt.println(<span class="s">"a equals {West, North}:"</span>, a == Direction_Set{.West, .North})
+	fmt.println(<span class="s">"a subset of {N,W,S}:"</span>, a &lt;= Direction_Set{.North, .West, .South})
+
+<span class="c1">	// Character ranges work the same way; the underlying</span>
+<span class="c1">	// values are printed as numbers.</span>
+	cs := Char_Set{<span class="sc">'A'</span>, <span class="sc">'C'</span>, <span class="sc">'Z'</span>}
+	fmt.println(<span class="s">"char set:"</span>, cs)
+	fmt.println(<span class="s">"'B' <span class="k">in</span> cs:"</span>, <span class="sc">'B'</span> <span class="k">in</span> cs)
+	fmt.println(<span class="s">"'Z' <span class="k">in</span> cs:"</span>, <span class="sc">'Z'</span> <span class="k">in</span> cs)
+
+<span class="c1">	// Sizes: 26 chars pack into 4 bytes, 128 elements into 16,</span>
+<span class="c1">	// and the explicit u8 backing stays at 1 byte.</span>
+	fmt.println(<span class="s">"size of Char_Set:"</span>, <span class="nb">size_of</span>(Char_Set))
+	fmt.println(<span class="s">"size of Big_Set:"</span>, <span class="nb">size_of</span>(Big_Set))
+	fmt.println(<span class="s">"size of Small_Explicit:"</span>, <span class="nb">size_of</span>(Small_Explicit))
+
+<span class="c1">	// += and -= add and remove single elements, handy for</span>
+<span class="c1">	// accumulating flags.</span>
+	permissions := Direction_Set{}
+	permissions += {.North}
+	permissions += {.West}
+	permissions -= {.North}
+	fmt.println(<span class="s">"permissions after edits:"</span>, permissions)
+}
+</pre></div></div>
+    <p class="next"><a href="/bit-fields">&larr; bit-fields</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
