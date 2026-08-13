@@ -19,3 +19,4 @@ enums
 bit-fields
 bit-sets
 unions
+distinct-types

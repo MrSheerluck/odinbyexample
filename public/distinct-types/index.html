@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Distinct types - Odin by Example</title>
+  <meta name="description" content="A distinct type creates a brand new type that has the same underlying representation as an existing one. Unlike a type alias, it is not interchangeable...">
+  <link rel="canonical" href="https://odinbyexample.com/distinct-types/">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Odin by Example">
+  <meta property="og:title" content="Distinct types - Odin by Example">
+  <meta property="og:description" content="A distinct type creates a brand new type that has the same underlying representation as an existing one. Unlike a type alias, it is not interchangeable...">
+  <meta property="og:url" content="https://odinbyexample.com/distinct-types/">
+  <meta property="og:image" content="https://odinbyexample.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Distinct types - Odin by Example",
+    "description": "A distinct type creates a brand new type that has the same underlying representation as an existing one. Unlike a type alias, it is not interchangeable...",
+    "url": "https://odinbyexample.com/distinct-types/",
+    "author": {"@type": "Person", "name": "mrsheerluck", "url": "https://github.com/mrsheerluck"},
+    "publisher": {"@type": "Organization", "name": "Odin by Example", "logo": {"@type": "ImageObject", "url": "https://odinbyexample.com/logo.svg"}},
+    "inLanguage": "en"
+  }
+  </script>
+</head>
+<body>
+  <div class="example" id="distinct-types">
+    <h1><a href="/">Odin by Example</a>: Distinct types</h1>
+    <div class="segment"><div class="docs"><p>A distinct type creates a brand new type that has the same underlying representation as an existing one. Unlike a type alias, it is not interchangeable with the original type.</p>
+<p>Declare one with the distinct keyword: My_Int :: distinct int. Values of a distinct type do not mix with the underlying type - arithmetic, assignment, and comparison all require an explicit conversion. This prevents accidental mixing of values that have the same representation but different meanings, like temperatures in Celsius and Fahrenheit.</p>
+<p>Aggregate types (struct, enum, union) are always distinct, even when named, so distinct mostly matters for basic types.</p>
+<p>Convert a distinct value to its underlying type (or back) with an explicit conversion: T(value).</p>
+<pre><span class="gp">$ odin run distinct-types.odin -file</span>
+<span class="go">celsius: 100 converted: 101.5</span>
+<span class="go">fahrenheit: 212</span>
+<span class="go">boiling point: 100</span>
+<span class="go">converted to int: true</span>
+<span class="go">Celsius is distinct from int: true</span>
+<span class="go">total bytes: 200</span>
+<span class="go">score: 100000</span>
+<span class="go">valid age: true</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+<span class="c1">// A distinct type shares the underlying representation but is</span>
+<span class="c1">// a different type. Celsius and Fahrenheit are both f64, but</span>
+<span class="c1">// mixing them is a bug the compiler can catch.</span>
+Celsius :: <span class="k">distinct</span> f<span class="m">64</span>
+Fahrenheit :: <span class="k">distinct</span> f<span class="m">64</span>
+
+<span class="c1">// Distinct types work as element types too.</span>
+Byte_Count :: <span class="k">distinct</span> u<span class="m">64</span>
+
+<span class="c1">// A distinct type can be based on any basic type.</span>
+ID :: <span class="k">distinct</span> <span class="kt">int</span>
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Literals convert implicitly to the distinct type.</span>
+	boiling := Celsius(<span class="m">100</span>)
+
+<span class="c1">	// Distinct types cannot be mixed with the underlying type</span>
+<span class="c1">	// without conversion. This line would not compile:</span>
+<span class="c1">	//   boiling + 1.5</span>
+<span class="c1">	// Convert explicitly to do math with plain f64 values.</span>
+	value := f<span class="m">64</span>(boiling) + <span class="m">1.5</span>
+	fmt.println(<span class="s">"celsius:"</span>, boiling, <span class="s">"converted:"</span>, value)
+
+<span class="c1">	// A helper procedure can keep conversions in one place.</span>
+	to_fahrenheit :: <span class="k">proc</span>(c: Celsius) -&gt; Fahrenheit {
+		<span class="k">return</span> Fahrenheit(f<span class="m">64</span>(c) * <span class="m">9.0</span> / <span class="m">5.0</span> + <span class="m">32.0</span>)
+	}
+	fmt.println(<span class="s">"fahrenheit:"</span>, to_fahrenheit(Celsius(<span class="m">100</span>)))
+
+<span class="c1">	// Convert back and forth with explicit conversions.</span>
+	fmt.println(<span class="s">"boiling point:"</span>, <span class="kt">int</span>(boiling))
+	fmt.println(<span class="s">"converted to <span class="kt">int</span>:"</span>, <span class="kt">int</span>(Celsius(<span class="m">37</span>)) == <span class="m">37</span>)
+
+<span class="c1">	// distinct is not the same as the underlying type.</span>
+	#assert(Celsius != f<span class="m">64</span>)
+	fmt.println(<span class="s">"Celsius is <span class="k">distinct</span> from <span class="kt">int</span>:"</span>, Celsius != <span class="kt">int</span>)
+
+<span class="c1">	// Distinct types keep the underlying size and layout.</span>
+	total := Byte_Count(<span class="m">200</span>)
+	fmt.println(<span class="s">"total bytes:"</span>, total)
+
+<span class="c1">	// Storing distinct values in a variable of a different</span>
+<span class="c1">	// distinct type requires conversion, as does using one</span>
+<span class="c1">	// where an int is expected.</span>
+	score := ID(<span class="m">100_000</span>)
+	fmt.println(<span class="s">"score:"</span>, score)
+
+<span class="c1">	// Comparing across distinct types fails to compile too.</span>
+	age := ID(<span class="m">42</span>)
+	fmt.println(<span class="s">"valid age:"</span>, age == ID(<span class="m">42</span>))
+}
+</pre></div></div>
+    <p class="next"><a href="/unions/">&larr; unions</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
