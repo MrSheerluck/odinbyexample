@@ -20,3 +20,4 @@ bit-fields
 bit-sets
 unions
 distinct-types
+type-aliases

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Type aliases - Odin by Example</title>
+  <meta name="description" content="A type alias gives an existing type a second name. The alias is the same type as the original: values mix freely in both directions, with no conversions...">
+  <link rel="canonical" href="https://odinbyexample.com/type-aliases/">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Odin by Example">
+  <meta property="og:title" content="Type aliases - Odin by Example">
+  <meta property="og:description" content="A type alias gives an existing type a second name. The alias is the same type as the original: values mix freely in both directions, with no conversions...">
+  <meta property="og:url" content="https://odinbyexample.com/type-aliases/">
+  <meta property="og:image" content="https://odinbyexample.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Type aliases - Odin by Example",
+    "description": "A type alias gives an existing type a second name. The alias is the same type as the original: values mix freely in both directions, with no conversions...",
+    "url": "https://odinbyexample.com/type-aliases/",
+    "author": {"@type": "Person", "name": "mrsheerluck", "url": "https://github.com/mrsheerluck"},
+    "publisher": {"@type": "Organization", "name": "Odin by Example", "logo": {"@type": "ImageObject", "url": "https://odinbyexample.com/logo.svg"}},
+    "inLanguage": "en"
+  }
+  </script>
+</head>
+<body>
+  <div class="example" id="type-aliases">
+    <h1><a href="/">Odin by Example</a>: Type aliases</h1>
+    <div class="segment"><div class="docs"><p>A type alias gives an existing type a second name. The alias is the same type as the original: values mix freely in both directions, with no conversions and no runtime cost. This is different from a distinct type (Name :: distinct Type), which creates a brand new type.</p>
+<p>Declare an alias with Name :: Type. Aliases are handy for shortening long type names, giving domain meaning to basic types, and renaming types from other packages.</p>
+<p>Note that named aggregate types (struct, enum, union) are always distinct, but aliasing a named type keeps its identity: Name :: Point is the same type as Point.</p>
+<pre><span class="gp">$ odin run type-aliases.odin -file</span>
+<span class="go">temperature == f64: true</span>
+<span class="go">Temp == Temperature: true</span>
+<span class="go">Vector == [3]f64: true</span>
+<span class="go">Coord == Point: true</span>
+<span class="go">temp: 36.6</span>
+<span class="go">temp + 1.5: 38.1</span>
+<span class="go">trip distance: 120.5</span>
+<span class="go">v + w: [3, 4, 5]</span>
+<span class="go">p: Point{x = 1, y = 2}</span>
+<span class="go">q: Point{x = 3, y = 4}</span>
+<span class="go">distance: 2.8284271247461903</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+<span class="k">import</span> <span class="s">"core:math"</span>
+
+<span class="c1">// A basic type alias: Temperature and f64 are the same type.</span>
+Temperature :: f<span class="m">64</span>
+
+<span class="c1">// An alias can name another alias.</span>
+Temp :: Temperature
+
+<span class="c1">// Named arrays are aliases too, not distinct types.</span>
+Vector :: [<span class="m">3</span>]f<span class="m">64</span>
+
+<span class="c1">// A named struct is always distinct, but aliasing the name</span>
+<span class="c1">// keeps the same type.</span>
+Point :: <span class="k">struct</span> {
+	x, y: f<span class="m">64</span>,
+}
+Coord :: Point
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// Compile-time checks: an alias equals its original type.</span>
+	#assert(Temperature == f<span class="m">64</span>)
+	#assert(Temp == Temperature)
+	#assert(Vector == [<span class="m">3</span>]f<span class="m">64</span>)
+	#assert(Coord == Point)
+	fmt.println(<span class="s">"temperature == f<span class="m">64</span>:"</span>, Temperature == f<span class="m">64</span>)
+	fmt.println(<span class="s">"Temp == Temperature:"</span>, Temp == Temperature)
+	fmt.println(<span class="s">"Vector == [<span class="m">3</span>]f<span class="m">64</span>:"</span>, Vector == [<span class="m">3</span>]f<span class="m">64</span>)
+	fmt.println(<span class="s">"Coord == Point:"</span>, Coord == Point)
+
+<span class="c1">	// Alias values mix with the underlying type freely.</span>
+	t: Temperature = <span class="m">36.6</span>
+	fmt.println(<span class="s">"temp:"</span>, t)
+	fmt.println(<span class="s">"temp + <span class="m">1.5</span>:"</span>, t + <span class="m">1.5</span>)
+
+<span class="c1">	// Aliases document intent in procedure signatures while</span>
+<span class="c1">	// staying interchangeable with the underlying type.</span>
+	speed: Temperature = <span class="m">60.25</span>
+	hours: f<span class="m">64</span> = <span class="m">2</span>
+	trip := f<span class="m">64</span>(speed) * hours
+	fmt.println(<span class="s">"trip distance:"</span>, trip)
+
+<span class="c1">	// Aliasing an array keeps array programming behavior.</span>
+	v: Vector = {<span class="m">1</span>, <span class="m">2</span>, <span class="m">3</span>}
+	w: [<span class="m">3</span>]f<span class="m">64</span> = {<span class="m">2</span>, <span class="m">2</span>, <span class="m">2</span>}
+	fmt.println(<span class="s">"v + w:"</span>, v + w)
+
+<span class="c1">	// A Coord is a Point, and vice versa.</span>
+	p: Point = Point{<span class="m">1</span>, <span class="m">2</span>}
+	q: Coord = Point{<span class="m">3</span>, <span class="m">4</span>}
+	fmt.println(<span class="s">"p:"</span>, p)
+	fmt.println(<span class="s">"q:"</span>, q)
+
+<span class="c1">	// Aliases work as parameter types with no conversion.</span>
+	distance :: <span class="k">proc</span>(a, b: Point) -&gt; f<span class="m">64</span> {
+		dx := b.x - a.x
+		dy := b.y - a.y
+		<span class="k">return</span> math.sqrt(dx*dx + dy*dy)
+	}
+	fmt.println(<span class="s">"distance:"</span>, distance(p, q))
+}
+</pre></div></div>
+    <p class="next"><a href="/distinct-types/">&larr; distinct-types</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
