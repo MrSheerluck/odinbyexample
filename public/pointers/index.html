@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pointers - Odin by Example</title>
+  <meta name="description" content="A pointer is a value that holds the memory address of another value. The type ^T is a pointer to a T value. Pointers allow code to share and mutate a...">
+  <link rel="canonical" href="https://odinbyexample.com/pointers/">
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/site.css">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Odin by Example">
+  <meta property="og:title" content="Pointers - Odin by Example">
+  <meta property="og:description" content="A pointer is a value that holds the memory address of another value. The type ^T is a pointer to a T value. Pointers allow code to share and mutate a...">
+  <meta property="og:url" content="https://odinbyexample.com/pointers/">
+  <meta property="og:image" content="https://odinbyexample.com/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Pointers - Odin by Example",
+    "description": "A pointer is a value that holds the memory address of another value. The type ^T is a pointer to a T value. Pointers allow code to share and mutate a...",
+    "url": "https://odinbyexample.com/pointers/",
+    "author": {"@type": "Person", "name": "mrsheerluck", "url": "https://github.com/mrsheerluck"},
+    "publisher": {"@type": "Organization", "name": "Odin by Example", "logo": {"@type": "ImageObject", "url": "https://odinbyexample.com/logo.svg"}},
+    "inLanguage": "en"
+  }
+  </script>
+</head>
+<body>
+  <div class="example" id="pointers">
+    <h1><a href="/">Odin by Example</a>: Pointers</h1>
+    <div class="segment"><div class="docs"><p>A pointer is a value that holds the memory address of another value. The type ^T is a pointer to a T value. Pointers allow code to share and mutate a value without copying it.</p>
+<p>The & operator takes the address of its operand, and the ^ operator dereferences a pointer, reading or writing the value it points to.</p>
+<p>The zero value of a pointer is nil. Reading through a nil pointer causes a runtime panic, so check before using.</p>
+<p>Note: unlike C, Odin uses ^ for pointers (Pascal style) instead of *. There is no pointer arithmetic; use ptr_offset in "core:mem" if you need it.</p>
+<pre><span class="gp">$ odin run pointers.odin -file</span>
+<span class="go">read through p: 123</span>
+<span class="go">wrote through p: 1337</span>
+<span class="go">zero value is nil: true</span>
+<span class="go">moved x: 99</span>
+<span class="go">swapped: a = 2 b = 1</span>
+<span class="go">double: 10</span></pre></div><div class="code"><pre><span class="k">package</span> main
+
+<span class="k">import</span> <span class="s">"core:fmt"</span>
+
+Point :: <span class="k">struct</span> {
+	x, y: <span class="kt">int</span>,
+}
+
+main :: <span class="k">proc</span>() {
+<span class="c1">	// &amp; takes the address of a variable; p has type ^int.</span>
+	i := <span class="m">123</span>
+	p := &amp;i
+
+<span class="c1">	// ^ dereferences: read and write through the pointer.</span>
+	fmt.println(<span class="s">"read through p:"</span>, p^)
+	p^ = <span class="m">1337</span>
+	fmt.println(<span class="s">"wrote through p:"</span>, i)
+
+<span class="c1">	// A pointer with no address is nil.</span>
+	q: ^<span class="kt">int</span>
+	fmt.println(<span class="s">"zero value is <span class="kc">nil</span>:"</span>, q == <span class="kc">nil</span>)
+
+<span class="c1">	// Struct fields can be reached through a pointer without</span>
+<span class="c1">	// an explicit dereference: p.x means p^.x.</span>
+	pt := Point{<span class="m">1</span>, <span class="m">2</span>}
+	pp := &amp;pt
+	pp.x = <span class="m">99</span>
+	fmt.println(<span class="s">"moved x:"</span>, pt.x)
+
+<span class="c1">	// Passing pointers lets a procedure mutate its arguments.</span>
+	swap :: <span class="k">proc</span>(a, b: ^<span class="kt">int</span>) {
+		tmp := a^
+		a^ = b^
+		b^ = tmp
+	}
+	x, y := <span class="m">1</span>, <span class="m">2</span>
+	swap(&amp;x, &amp;y)
+	fmt.println(<span class="s">"swapped: a ="</span>, x, <span class="s">"b ="</span>, y)
+
+<span class="c1">	// Pointer to a pointer: ^^int dereferences twice.</span>
+	n := <span class="m">5</span>
+	pn := &amp;n
+	ppn := &amp;pn
+	ppn^^ = <span class="m">10</span>
+	fmt.println(<span class="s">"double:"</span>, n)
+}
+</pre></div></div>
+    <p class="next"><a href="/type-aliases/">&larr; type-aliases</a></p>
+    <div class="footer">
+  <p>
+    by <a href="https://github.com/mrsheerluck">mrsheerluck</a>
+    | <a href="https://github.com/mrsheerluck/odinbyexample">source</a>
+    | <a href="https://odin-lang.org/">odin-lang.org</a>
+  </p>
+</div>
+
+  </div>
+  <script src="/site.js" async></script>
+</body>
+</html>
